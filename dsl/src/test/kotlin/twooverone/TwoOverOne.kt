@@ -58,8 +58,8 @@ val twoOverOneSystem = BiddingSystem {
         twoClubStrong()
     }
 
-    // 2D 開叫 (三色排組)
-    "2D" - "三色排組4-4-4-1或4-4-5-0，10-13點" {
+    // 2D 開叫 (三色牌組)
+    "2D" - "三色牌組4-4-4-1或4-4-5-0，10-13點" {
         twoDiamondMulti()
     }
 
@@ -93,15 +93,15 @@ val twoOverOneSystem = BiddingSystem {
     }
 
     // 3NT 開叫 (Gambling)
-    "3N" - "8張不連張低花排組" {
+    "3N" - "8張不連張低花牌組" {
         threeNoTrump()
     }
 
     // 4C/4D Namyats
-    "4C" - "Namyats：好的H排組，8贏墩" {
+    "4C" - "Namyats：好的H牌組，8贏墩" {
         namyatsHeart()
     }
-    "4D" - "Namyats：好的S排組，8贏墩" {
+    "4D" - "Namyats：好的S牌組，8贏墩" {
         namyatsSpade()
     }
 
