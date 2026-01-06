@@ -7,7 +7,7 @@ import com.github.phisgr.bridge.BiddingTree
  * 5+H，12-21 HCP
  */
 fun BiddingTree.oneHeart() {
-    explanation = "5張以上H排組，12-21點"
+    explanation = "5張以上H牌組，12-21點"
 
     // 1S 應叫
     "1S" - "4+S，5+點" {
@@ -33,7 +33,7 @@ fun BiddingTree.oneHeart() {
     }
 
     // 有限加叫（跳加叫）
-    "3H" - "有限加叫：9-12點，3張支持+短排組或4張支持無短排組" {
+    "3H" - "有限加叫：9-12點，3張支持+短牌組或4張支持無短牌組" {
         limitRaiseHeart()
     }
 
@@ -43,7 +43,7 @@ fun BiddingTree.oneHeart() {
     }
 
     // 迫叫性加叫（瑞士式）
-    "3S" - "蹦跳叫牌：12-15點，4-5張H支持+S短排組" {
+    "3S" - "竄叫：12-15點，4-5張H支持+S短牌組" {
         splinterAfterHeart()
     }
     "4C" - "瑞士式：12-15點，4-5張H支持+好將牌(含2頂張)" {
@@ -75,8 +75,8 @@ fun BiddingTree.oneHeart() {
 private fun BiddingTree.oneHeartAfterOneSpade() {
     "1N" - "低限均衡型，12-15點，5-3-3-2" {
         // 應叫者再叫
-        "2C" - "新低花排組迫叫"
-        "2D" - "新低花排組迫叫"
+        "2C" - "新低花牌組迫叫"
+        "2D" - "新低花牌組迫叫"
         "2H" - "有限加叫：9-12點，3張H支持"
         "2S" - "邀叫：6+S"
         "2N" - "邀叫"
@@ -84,7 +84,7 @@ private fun BiddingTree.oneHeartAfterOneSpade() {
     }
 
     "2C" - "4+C，可能5H-4C或更長" {
-        "2D" - "第四花色排組迫叫"
+        "2D" - "第四花色牌組迫叫"
         "2H" - "3張H支持，12-15點"
         "2S" - "5+S"
         "2N" - "邀叫"
@@ -121,10 +121,10 @@ private fun BiddingTree.oneHeartAfterOneSpade() {
 
     "3S" - "4S，19+點跳加叫"
 
-    "3N" - "16-18點，6張堅實H排組"
+    "3N" - "16-18點，6張堅實H牌組"
 
-    "4C" - "蹦跳叫牌：4S支持，C短排組，19+點"
-    "4D" - "蹦跳叫牌：4S支持，D短排組，19+點"
+    "4C" - "竄叫：4S支持，C短牌組，19+點"
+    "4D" - "竄叫：4S支持，D短牌組，19+點"
     "4H" - "割裂叫牌：6+H，4S，成局牌力"
     "4S" - "止叫"
 }
@@ -172,7 +172,7 @@ private fun BiddingTree.forcingNoTrumpAfterHeart() {
     "3D" - "跳叫：5+H-4+D，19+點"
     "3H" - "6+H，15-19點"
 
-    "4H" - "7+H強排組"
+    "4H" - "7+H強牌組"
 }
 
 /**
@@ -180,12 +180,12 @@ private fun BiddingTree.forcingNoTrumpAfterHeart() {
  */
 private fun BiddingTree.simpleRaiseHeart() {
     "Pass" - "低限，不進局試探"
-    "2S" - "進局試探：S排組有些大牌" {
-        "3H" - "S排組弱"
-        "4H" - "S排組好"
+    "2S" - "進局試探：S牌組有些大牌" {
+        "3H" - "S牌組弱"
+        "4H" - "S牌組好"
     }
-    "3C" - "進局試探：C排組有些大牌"
-    "3D" - "進局試探：D排組有些大牌"
+    "3C" - "進局試探：C牌組有些大牌"
+    "3D" - "進局試探：D牌組有些大牌"
     "3H" - "阻擊性再加叫：6張H"
     "4H" - "進局：19+點或6張H高限"
 }
@@ -202,9 +202,9 @@ private fun BiddingTree.twoOverOneAfterHeart() {
     "3D" - "3+D支持帶大牌，14-15點"
     "3H" - "好的6+H"
     "3N" - "16-18點均衡型，6張H接近堅實"
-    "4C" - "蹦跳叫牌：C短排組"
-    "4D" - "蹦跳叫牌：D短排組"
-    "4S" - "蹦跳叫牌：S短排組"
+    "4C" - "竄叫：C短牌組"
+    "4D" - "竄叫：D短牌組"
+    "4S" - "竄叫：S短牌組"
 }
 
 /**
@@ -212,11 +212,11 @@ private fun BiddingTree.twoOverOneAfterHeart() {
  */
 private fun BiddingTree.limitRaiseHeart() {
     "Pass" - "12-13點均衡型低限"
-    "3S" - "馬歇問叫：問短排組（3NT表示S短排組）" {
-        "3N" - "S短排組"
-        "4C" - "C短排組"
-        "4D" - "D短排組"
-        "4H" - "無短排組（半均衡型）"
+    "3S" - "馬歇問叫：問短牌組（3NT表示S短牌組）" {
+        "3N" - "S短牌組"
+        "4C" - "C短牌組"
+        "4D" - "D短牌組"
+        "4H" - "無短牌組（半均衡型）"
     }
     "4H" - "接受邀叫"
 }
@@ -226,7 +226,7 @@ private fun BiddingTree.limitRaiseHeart() {
  */
 private fun BiddingTree.schreiberJumpHeart() {
     "3H" - "問牌（要求說明牌情）" {
-        "3S" - "有缺門排組" {
+        "3S" - "有缺門牌組" {
             "3N" - "問缺門所在" {
                 "4C" - "C缺門"
                 "4D" - "D缺門"
@@ -241,7 +241,7 @@ private fun BiddingTree.schreiberJumpHeart() {
 }
 
 /**
- * 蹦跳叫牌後
+ * 竄叫後
  */
 private fun BiddingTree.splinterAfterHeart() {
     "4H" - "止叫"

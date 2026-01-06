@@ -7,7 +7,7 @@ import com.github.phisgr.bridge.BiddingTree
  * 5+S，12-21 HCP
  */
 fun BiddingTree.oneSpade() {
-    explanation = "5張以上S排組，12-21點"
+    explanation = "5張以上S牌組，12-21點"
 
     // 迫叫性1NT
     "1N" - "迫叫性無將：5-12點，非配合" {
@@ -31,7 +31,7 @@ fun BiddingTree.oneSpade() {
     }
 
     // 有限加叫（跳加叫）
-    "3S" - "有限加叫：9-12點，3張支持+短排組或4張支持無短排組" {
+    "3S" - "有限加叫：9-12點，3張支持+短牌組或4張支持無短牌組" {
         limitRaiseSpade()
     }
 
@@ -40,15 +40,15 @@ fun BiddingTree.oneSpade() {
         schreiberJumpSpade()
     }
 
-    // 迫叫性加叫（蹦跳叫牌）
-    "3N" - "蹦跳叫牌：12-15點，4-5張S支持+H短排組"
+    // 迫叫性加叫（竄叫）
+    "3N" - "竄叫：12-15點，4-5張S支持+H短牌組"
     "4C" - "瑞士式：12-15點，4-5張S支持+好將牌(含2頂張)" {
         swissAfterSpade()
     }
     "4D" - "瑞士式：12-15點，4-5張S支持+差將牌" {
         swissAfterSpade()
     }
-    "4H" - "蹦跳叫牌：12-15點，4-5張S支持+H短排組"
+    "4H" - "竄叫：12-15點，4-5張S支持+H短牌組"
 
     // 直接進局
     "4S" - "止叫進局"
@@ -105,7 +105,7 @@ private fun BiddingTree.forcingNoTrumpAfterSpade() {
     "3H" - "跳叫：5+S-4+H，19+點"
     "3S" - "6+S，15-19點"
 
-    "4S" - "7+S強排組"
+    "4S" - "7+S強牌組"
 }
 
 /**
@@ -113,12 +113,12 @@ private fun BiddingTree.forcingNoTrumpAfterSpade() {
  */
 private fun BiddingTree.simpleRaiseSpade() {
     "Pass" - "低限，不進局試探"
-    "3C" - "進局試探：C排組有些大牌" {
-        "3S" - "C排組弱"
-        "4S" - "C排組好"
+    "3C" - "進局試探：C牌組有些大牌" {
+        "3S" - "C牌組弱"
+        "4S" - "C牌組好"
     }
-    "3D" - "進局試探：D排組有些大牌"
-    "3H" - "進局試探：H排組有些大牌"
+    "3D" - "進局試探：D牌組有些大牌"
+    "3H" - "進局試探：H牌組有些大牌"
     "3S" - "阻擊性再加叫：6張S"
     "4S" - "進局：19+點或6張S高限"
 }
@@ -135,9 +135,9 @@ private fun BiddingTree.twoOverOneAfterSpade() {
     "3H" - "3+H支持帶大牌，14-15點"
     "3S" - "好的6+S"
     "3N" - "16-18點均衡型，6張S接近堅實"
-    "4C" - "蹦跳叫牌：C短排組"
-    "4D" - "蹦跳叫牌：D短排組"
-    "4H" - "蹦跳叫牌：H短排組"
+    "4C" - "竄叫：C短牌組"
+    "4D" - "竄叫：D短牌組"
+    "4H" - "竄叫：H短牌組"
 }
 
 /**
@@ -145,11 +145,11 @@ private fun BiddingTree.twoOverOneAfterSpade() {
  */
 private fun BiddingTree.limitRaiseSpade() {
     "Pass" - "12-13點均衡型低限"
-    "3N" - "馬歇問叫：問短排組" {
-        "4C" - "C短排組"
-        "4D" - "D短排組"
-        "4H" - "H短排組"
-        "4S" - "無短排組（半均衡型）"
+    "3N" - "馬歇問叫：問短牌組" {
+        "4C" - "C短牌組"
+        "4D" - "D短牌組"
+        "4H" - "H短牌組"
+        "4S" - "無短牌組（半均衡型）"
     }
     "4S" - "接受邀叫"
 }
@@ -159,7 +159,7 @@ private fun BiddingTree.limitRaiseSpade() {
  */
 private fun BiddingTree.schreiberJumpSpade() {
     "3S" - "問牌（要求說明牌情）" {
-        "3N" - "有缺門排組" {
+        "3N" - "有缺門牌組" {
             "4C" - "問缺門所在" {
                 "4D" - "D缺門"
                 "4H" - "H缺門"
