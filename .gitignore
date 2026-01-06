@@ -49,6 +49,7 @@ out
 .DS_Store
 node_modules
 /dist
+*.tsbuildinfo
 
 # local env files
 .env.local
