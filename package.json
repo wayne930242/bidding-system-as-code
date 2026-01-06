@@ -1,4 +1,10 @@
 {
+	"scripts": {
+		"dev": "pnpm -C viewer dev",
+		"build": "pnpm -C viewer build",
+		"check": "pnpm -C viewer check",
+		"generate": "pnpm -C viewer generate"
+	},
 	"dependencies": {
 		"opencc-js": "^1.0.5",
 		"iconv-lite": "^0.7.1"
