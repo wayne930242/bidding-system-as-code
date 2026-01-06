@@ -2,6 +2,7 @@ package fantunes
 
 import com.github.phisgr.bridge.BiddingSystem
 import com.github.phisgr.bridge.writeHtml
+import com.github.phisgr.bridge.writeTo
 import java.io.File
 
 fun main() {
@@ -50,7 +51,11 @@ fun main() {
         slamBidding()
         general()
     }
-    val file = File("build", "fantunes.html")
-    system.writeHtml(file)
-    println("Written HTML to ${file.absolutePath}")
+    val htmlFile = File("build", "fantunes.html")
+    system.writeHtml(htmlFile)
+    println("Written HTML to ${htmlFile.absolutePath}")
+
+    val jsonFile = File("build", "fantunes.json")
+    system.writeTo(jsonFile)
+    println("Written JSON to ${jsonFile.absolutePath}")
 }

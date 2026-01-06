@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"opencc-js": "^1.0.5",
+		"iconv-lite": "^0.7.1"
+	}
+}

@@ -68,3 +68,7 @@ yarn-error.log*
 *.sw?
 
 viewer/dist
+
+# Crawled data
+scripts/crawl-2over1.js
+docs/2over1
