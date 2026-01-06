@@ -12,16 +12,26 @@ import { useBidStore } from "@/store/bidStore";
 import { cn } from "@/lib/utils";
 import type { Bidder } from "@/types/bid";
 
-// Convention names to highlight with red/circled styling
+// Convention names to highlight with red badge
 // Longer names first to avoid partial matches (e.g. "Minor Suit Stayman" before "Stayman")
 const CONVENTION_NAMES = [
+  "Jacoby轉換叫",
+  "Texas轉換叫",
+  "Inverted Minors",
   "Minor Suit Stayman",
   "Puppet Stayman",
+  "低花Stayman",
+  "迫叫性無王",
+  "反常低花加叫",
+  "轉換叫",
   "RKCBlackwood",
   "RKC Blackwood",
+  "Schreiber跳叫",
   "Splinter跳叫",
   "Mathe問叫",
+  "Ogust問叫",
   "反常加叫",
+  "選擇定約",
   "Stayman",
   "Jacoby",
   "Texas",
@@ -33,6 +43,8 @@ const CONVENTION_NAMES = [
   "Swiss",
   "Michaels",
   "Namyats",
+  "問低花",
+  "問高花",
   "Ogust",
   "Gerber",
   "RKC",
@@ -41,8 +53,13 @@ const CONVENTION_NAMES = [
   "DONT",
 ];
 
-// Create regex pattern for convention names (case insensitive)
-// Sort by length (longest first) to ensure longer matches take precedence
+// Key terms to highlight with different styling (not conventions)
+// Use regex patterns for more precise matching
+const KEY_TERM_PATTERNS = [
+  /(?<!形同)倒叫(?!但不需)/g, // "倒叫" but not "形同倒叫" or "倒叫但不需"
+];
+
+// Create regex pattern for convention names
 const sortedConventionNames = [...CONVENTION_NAMES].sort(
   (a, b) => b.length - a.length,
 );
@@ -55,27 +72,86 @@ const conventionPattern = new RegExp(
 // Includes M (major), m (minor), any (any suit) as generic patterns
 const validBidPattern = /^(Pass|P|X|XX|\d[CDHSNMm]T?|\dany)$/i;
 
-// Format meaning text with highlighted convention names
+// Format meaning text with highlighted terms
 function formatMeaning(meaning: string): ReactNode {
-  const parts = meaning.split(conventionPattern);
-  if (parts.length === 1) return meaning;
+  // First, handle key terms with special patterns
+  let processed = meaning;
+  const keyTermMatches: { start: number; end: number; text: string }[] = [];
 
-  return parts.map((part, index) => {
+  for (const pattern of KEY_TERM_PATTERNS) {
+    const regex = new RegExp(pattern.source, pattern.flags);
+    let match;
+    while ((match = regex.exec(meaning)) !== null) {
+      keyTermMatches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        text: match[0],
+      });
+    }
+  }
+
+  // Split by convention pattern
+  const parts = processed.split(conventionPattern);
+  if (parts.length === 1 && keyTermMatches.length === 0) return meaning;
+
+  // Build result with both convention and key term highlighting
+  const result: ReactNode[] = [];
+  let currentIndex = 0;
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
     const isConvention = sortedConventionNames.some(
       (name) => name.toLowerCase() === part.toLowerCase(),
     );
+
     if (isConvention) {
-      return (
+      result.push(
         <span
-          key={index}
+          key={`conv-${i}`}
           className="mx-0.5 inline-block rounded-full bg-red-500 px-2 py-0.5 font-bold text-white"
         >
           {part}
-        </span>
+        </span>,
       );
+    } else {
+      // Check for key terms within this part
+      const partStart = meaning.indexOf(part, currentIndex);
+      const partEnd = partStart + part.length;
+      const relevantKeyTerms = keyTermMatches.filter(
+        (m) => m.start >= partStart && m.end <= partEnd,
+      );
+
+      if (relevantKeyTerms.length === 0) {
+        result.push(part);
+      } else {
+        // Split this part by key terms
+        let lastEnd = 0;
+        const localStart = partStart;
+        for (const match of relevantKeyTerms) {
+          const relStart = match.start - localStart;
+          const relEnd = match.end - localStart;
+          if (relStart > lastEnd) {
+            result.push(part.slice(lastEnd, relStart));
+          }
+          result.push(
+            <span
+              key={`key-${match.start}`}
+              className="mx-0.5 inline-block rounded-full bg-blue-500 px-2 py-0.5 font-bold text-white"
+            >
+              {match.text}
+            </span>,
+          );
+          lastEnd = relEnd;
+        }
+        if (lastEnd < part.length) {
+          result.push(part.slice(lastEnd));
+        }
+      }
     }
-    return part;
-  });
+    currentIndex += part.length;
+  }
+
+  return result;
 }
 
 const bidderBgClass: Record<Bidder, string> = {

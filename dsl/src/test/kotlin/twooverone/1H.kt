@@ -3,19 +3,19 @@ package twooverone
 import com.github.phisgr.bridge.BiddingTree
 
 /**
- * 1H 開叫及應叫
+ * 1H 開叫及答叫
  * 5+H，12-21 HCP
  */
 fun BiddingTree.oneHeart() {
     explanation = "5張以上H牌組，12-21點"
 
-    // 1S 應叫
+    // 1S 答叫
     "1S" - "4+S，5+點" {
         oneHeartAfterOneSpade()
     }
 
     // 迫叫性1NT
-    "1N" - "迫叫性無將：5-12點，非配合也無1S可叫" {
+    "1N" - "迫叫性無王：5-12點，非配合也無1S可叫" {
         forcingNoTrumpAfterHeart()
     }
 
@@ -24,7 +24,7 @@ fun BiddingTree.oneHeart() {
         simpleRaiseHeart()
     }
 
-    // 二蓋一應叫（迫叫進局）
+    // 二蓋一答叫（迫叫進局）
     "2C" - "二蓋一：4+C，12+點，迫叫進局" {
         twoOverOneAfterHeart()
     }
@@ -67,6 +67,36 @@ fun BiddingTree.oneHeart() {
     overcall("2any") {
         supportDouble()
     }
+
+    // Drury（答叫者已Pass過）
+    addPassHandAdjRow()
+    "2C" - "Drury：10-12點，3+張H支持（已Pass）" {
+        druryResponseHeart()
+    }
+}
+
+/**
+ * Drury答叫後的開叫者再叫
+ */
+private fun BiddingTree.druryResponseHeart() {
+    "2D" - "低限開叫（輕開叫/次低限）" {
+        "2H" - "止叫"
+        "3H" - "邀叫"
+    }
+    "2H" - "正常開叫，12-14點" {
+        "Pass" - "止叫"
+        "3H" - "邀叫"
+        "4H" - "進局"
+    }
+    "2S" - "4S，額外長度" {
+        "2N" - "接力"
+        "3H" - "H支持"
+    }
+    "2N" - "18+點，迫叫進局"
+    "3C" - "5+H-4+C，15-17點"
+    "3D" - "5+H-4+D，15-17點"
+    "3H" - "6+H，15-17點"
+    "4H" - "止叫進局"
 }
 
 /**
@@ -74,7 +104,7 @@ fun BiddingTree.oneHeart() {
  */
 private fun BiddingTree.oneHeartAfterOneSpade() {
     "1N" - "低限平均牌型，12-15點，5-3-3-2" {
-        // 應叫者再叫
+        // 答叫者再叫
         "2C" - "新低花牌組迫叫"
         "2D" - "新低花牌組迫叫"
         "2H" - "有限加叫：9-12點，3張H支持"
@@ -191,7 +221,7 @@ private fun BiddingTree.simpleRaiseHeart() {
 }
 
 /**
- * 二蓋一應叫後的開叫者再叫
+ * 二蓋一答叫後的開叫者再叫
  */
 private fun BiddingTree.twoOverOneAfterHeart() {
     "2D" - "4+D（形同倒叫但不需額外牌力）"
@@ -261,7 +291,7 @@ private fun BiddingTree.swissAfterHeart() {
  * 支持性賭倍
  */
 private fun BiddingTree.supportDouble() {
-    "X" - "支持性賭倍：3張應叫花色支持"
+    "X" - "支持性賭倍：3張答叫花色支持"
     "2H" - "簡單加叫：4+張支持"
     "Pass" - "2張或更少支持"
 }

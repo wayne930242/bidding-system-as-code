@@ -3,7 +3,7 @@ package twooverone
 import com.github.phisgr.bridge.BiddingTree
 
 /**
- * 1NT 開叫及應叫
+ * 1NT 開叫及答叫
  * 16-18 HCP 平均牌型
  */
 fun BiddingTree.oneNoTrump() {
@@ -15,11 +15,11 @@ fun BiddingTree.oneNoTrump() {
     }
 
     // Jacoby Transfer
-    "2D" - "Jacoby轉移叫：5+H，或單牌組滿貫試探" {
+    "2D" - "Jacoby轉換叫：5+H，或單牌組滿貫試探" {
         jacobyToHearts()
     }
 
-    "2H" - "Jacoby轉移叫：5+S" {
+    "2H" - "Jacoby轉換叫：5+S" {
         jacobyToSpades()
     }
 
@@ -29,8 +29,8 @@ fun BiddingTree.oneNoTrump() {
     }
 
     // 2NT Transfer to 3C
-    "2N" - "轉移叫：C長牌組弱牌，或三花色牌組好牌(4-4-4-1/5-4-4-0)滿貫意圖" {
-        "3C" - "接受轉移" {
+    "2N" - "轉換叫：C長牌組弱牌，或三花色牌組好牌(4-4-4-1/5-4-4-0)滿貫意圖" {
+        "3C" - "接受轉換" {
             "Pass" - "C長牌組弱牌示弱"
             "3D" - "短牌組D，4-4-4-1或5-4-4-0滿貫試探"
             "3H" - "短牌組H，4-4-4-1或5-4-4-0滿貫試探"
@@ -50,15 +50,15 @@ fun BiddingTree.oneNoTrump() {
     }
 
     // Texas Transfer
-    "4D" - "Texas轉移叫：6+H" {
-        "4H" - "接受轉移" {
+    "4D" - "Texas轉換叫：6+H" {
+        "4H" - "接受轉換" {
             "Pass" - "止叫"
             "4N" - "RKCBlackwood問叫，H為將牌"
         }
     }
 
-    "4H" - "Texas轉移叫：6+S" {
-        "4S" - "接受轉移" {
+    "4H" - "Texas轉換叫：6+S" {
+        "4S" - "接受轉換" {
             "Pass" - "止叫"
             "4N" - "RKCBlackwood問叫，S為將牌"
         }
@@ -91,7 +91,7 @@ private fun BiddingTree.stayman() {
                 "3N" - "進局牌力"
             }
         }
-        "2S" - "接力叫，17+均衡或迫叫進局" {
+        "2S" - "接力叫，17+平均牌型或迫叫進局" {
             "2N" - "低限" {
                 "3S" - "5S-4H-2D-2C 15點"
             }
@@ -144,11 +144,11 @@ private fun BiddingTree.stayman() {
 }
 
 /**
- * Jacoby轉移叫到H
+ * Jacoby轉換叫到H
  * 可能是5+H，或單牌組滿貫試探(Walsh接力叫)
  */
 private fun BiddingTree.jacobyToHearts() {
-    "2H" - "接受轉移" {
+    "2H" - "接受轉換" {
         "Pass" - "弱牌，由開叫者打"
         "2S" - "單牌組滿貫試探，要求開叫者接力叫2NT" {
             "2N" - "接力" {
@@ -177,10 +177,10 @@ private fun BiddingTree.jacobyToHearts() {
 }
 
 /**
- * Jacoby轉移叫到S
+ * Jacoby轉換叫到S
  */
 private fun BiddingTree.jacobyToSpades() {
-    "2S" - "接受轉移" {
+    "2S" - "接受轉換" {
         "Pass" - "弱牌"
         "2N" - "5張牌組平均牌型，邀叫"
         "3C" - "4S-5+C邀叫"

@@ -15,8 +15,8 @@ val twoOverOneSystem = BiddingSystem {
         二蓋一進局體系（2/1 Game Force）是當代最流行的自然叫牌體系之一，由 Max Hardy 在其著作中系統化整理。本系統基於 Hardy 風格，強調分配展示而非精確牌力定義。
 
         ## 核心原則
-        - **二蓋一應叫迫叫進局**：開叫 1♦/♥/♠ 後，二線新花色應叫迫叫成局
-        - **迫叫性 1NT**：開叫 1♥/♠ 後，1NT 應叫為迫叫一輪（5-12 點）
+        - **二蓋一答叫迫叫進局**：開叫 1♦/♥/♠ 後，二線新花色答叫迫叫成局
+        - **迫叫性 1NT**：開叫 1♥/♠ 後，1NT 答叫為迫叫一輪（5-12 點）
         - **五張高花開叫**：1♥/♠ 開叫保證 5 張以上
         - **強無將**：1NT 開叫 16-18 點
 
@@ -25,7 +25,7 @@ val twoOverOneSystem = BiddingSystem {
         - 1♦：4+ 張（4-4-3-2 可開叫 3 張 D），12-21 點
         - 1♥/♠：5+ 張，12-21 點
         - 1NT：16-18 點平均牌型
-        - 2♣：強迫叫（23+ 均衡或 8+ 贏墩）
+        - 2♣：強迫叫（23+ 平均牌型或 8+ 贏墩）
         - 2♦：三色牌組（4-4-4-1 或 4-4-5-0），10-13 點
         - 2♥/♠：弱二（6 張，5-11 點）
         - 2NT：21-22 點平均牌型
@@ -34,7 +34,7 @@ val twoOverOneSystem = BiddingSystem {
         - 4♣/♦：Namyats（好的高花牌組，8 贏墩）
 
         ## 約定叫
-        - Stayman / Jacoby 轉移叫 / Texas 轉移叫
+        - Stayman / Jacoby 轉換叫 / Texas 轉換叫
         - Puppet Stayman（2NT 開叫後）
         - Minor Suit Stayman（低花 Stayman）
         - 反常低花加叫（Inverted Minors）
@@ -81,7 +81,7 @@ val twoOverOneSystem = BiddingSystem {
     }
 
     // 2C 開叫 (強迫叫)
-    "2C" - "強牌，23+均衡或8+贏墩" {
+    "2C" - "強牌，23+平均牌型或8+贏墩" {
         twoClubStrong()
     }
 

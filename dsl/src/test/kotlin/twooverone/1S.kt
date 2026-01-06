@@ -3,14 +3,14 @@ package twooverone
 import com.github.phisgr.bridge.BiddingTree
 
 /**
- * 1S 開叫及應叫
+ * 1S 開叫及答叫
  * 5+S，12-21 HCP
  */
 fun BiddingTree.oneSpade() {
     explanation = "5張以上S牌組，12-21點"
 
     // 迫叫性1NT
-    "1N" - "迫叫性無將：5-12點，非配合" {
+    "1N" - "迫叫性無王：5-12點，非配合" {
         forcingNoTrumpAfterSpade()
     }
 
@@ -19,7 +19,7 @@ fun BiddingTree.oneSpade() {
         simpleRaiseSpade()
     }
 
-    // 二蓋一應叫（迫叫進局）
+    // 二蓋一答叫（迫叫進局）
     "2C" - "二蓋一：4+C，12+點，迫叫進局" {
         twoOverOneAfterSpade()
     }
@@ -57,6 +57,37 @@ fun BiddingTree.oneSpade() {
     overcall("2any") {
         supportDoubleSpade()
     }
+
+    // Drury（答叫者已Pass過）
+    addPassHandAdjRow()
+    "2C" - "Drury：10-12點，3+張S支持（已Pass）" {
+        druryResponseSpade()
+    }
+}
+
+/**
+ * Drury答叫後的開叫者再叫
+ */
+private fun BiddingTree.druryResponseSpade() {
+    "2D" - "低限開叫（輕開叫/次低限）" {
+        "2S" - "止叫"
+        "3S" - "邀叫"
+    }
+    "2H" - "4H，額外長度" {
+        "2S" - "S支持"
+        "2N" - "接力"
+    }
+    "2S" - "正常開叫，12-14點" {
+        "Pass" - "止叫"
+        "3S" - "邀叫"
+        "4S" - "進局"
+    }
+    "2N" - "18+點，迫叫進局"
+    "3C" - "5+S-4+C，15-17點"
+    "3D" - "5+S-4+D，15-17點"
+    "3H" - "5+S-4+H，15-17點"
+    "3S" - "6+S，15-17點"
+    "4S" - "止叫進局"
 }
 
 /**
@@ -124,7 +155,7 @@ private fun BiddingTree.simpleRaiseSpade() {
 }
 
 /**
- * 二蓋一應叫後的開叫者再叫
+ * 二蓋一答叫後的開叫者再叫
  */
 private fun BiddingTree.twoOverOneAfterSpade() {
     "2H" - "4+H"
@@ -185,7 +216,7 @@ private fun BiddingTree.swissAfterSpade() {
  * 支持性賭倍
  */
 private fun BiddingTree.supportDoubleSpade() {
-    "X" - "支持性賭倍：3張應叫花色支持"
+    "X" - "支持性賭倍：3張答叫花色支持"
     "2S" - "簡單加叫：4+張支持"
     "Pass" - "2張或更少支持"
 }

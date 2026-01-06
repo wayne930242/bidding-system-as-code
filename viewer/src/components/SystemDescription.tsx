@@ -21,10 +21,6 @@ export function SystemDescription() {
     <div className="mx-auto mt-4 max-w-5xl px-4">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <div className="relative overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-card to-muted/30">
-          {/* Decorative corner */}
-          <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/5" />
-          <div className="pointer-events-none absolute -right-4 -top-4 h-16 w-16 rounded-full bg-primary/10" />
-
           {/* Header - clickable */}
           <button
             onClick={() => setIsOpen(!isOpen)}

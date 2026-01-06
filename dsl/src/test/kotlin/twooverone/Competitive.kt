@@ -23,7 +23,7 @@ fun BiddingSystem.addCompetitiveBidding() {
 - Unusual 2NT：5-5+兩個最低未叫花色
 - Michaels 扣叫：5-4+未叫花色
 
-### 蓋叫後的應叫
+### 蓋叫後的答叫
 - 簡單加叫：6-10點，3+張支持
 - 跳加叫：4-8點，4+張支持，阻擊性
 - 扣叫：11+點，迫叫
@@ -35,7 +35,7 @@ fun BiddingSystem.addCompetitiveBidding() {
 - 牌力無上限
 
 ### 支持性賭倍
-- 同伴開叫，你應叫，對方叫牌
+- 同伴開叫，你答叫，對方叫牌
 - 賭倍＝3張支持
 - 直接加叫＝4+張支持
 
@@ -57,7 +57,7 @@ fun BiddingSystem.addCompetitiveBidding() {
             "1D" - "自然叫，4+D"
             "1H" - "自然叫，4+H"
             "1S" - "自然叫，4+S"
-            "1N" - "7-10點，均衡，有C止張"
+            "1N" - "7-10點，平均牌型，有C止張"
             "2N" - "11-12點邀叫"
         }
         "1D" - "自然蓋叫，5+D，7-17點" {
@@ -65,7 +65,7 @@ fun BiddingSystem.addCompetitiveBidding() {
                 "XX" - "有牌力"
                 "2D" - "弱加叫"
             }
-            "1N" - "6-10點，均衡"
+            "1N" - "6-10點，平均牌型"
             "2D" - "簡單加叫，6-10點"
             "3D" - "阻擊性加叫"
         }
@@ -76,7 +76,7 @@ fun BiddingSystem.addCompetitiveBidding() {
                 "3H" - "阻擊性"
             }
             "1S" - "自然叫，5+S"
-            "1N" - "6-10點，均衡"
+            "1N" - "6-10點，平均牌型"
             "2H" - "簡單加叫"
             "2N" - "有限加叫，11-12點"
             "3H" - "阻擊性"
@@ -87,15 +87,15 @@ fun BiddingSystem.addCompetitiveBidding() {
                 "2S" - "弱加叫"
                 "3S" - "阻擊性"
             }
-            "1N" - "6-10點，均衡"
+            "1N" - "6-10點，平均牌型"
             "2S" - "簡單加叫"
             "2N" - "有限加叫"
             "3S" - "阻擊性"
         }
         "1N" - "15-18點平均牌型，有C止張" {
             "2C" - "Stayman"
-            "2D" - "轉移叫到H"
-            "2H" - "轉移叫到S"
+            "2D" - "轉換叫到H"
+            "2H" - "轉換叫到S"
             "2S" - "Minor Suit Stayman"
             "2N" - "邀叫"
             "3N" - "止叫"
@@ -151,8 +151,8 @@ fun BiddingSystem.addCompetitiveBidding() {
         }
         "1N" - "15-18點平均牌型，有D止張" {
             "2C" - "Stayman"
-            "2D" - "轉移叫到H"
-            "2H" - "轉移叫到S"
+            "2D" - "轉換叫到H"
+            "2H" - "轉換叫到S"
         }
         "2C" - "自然叫，5+C" {
             "2D" - "自然叫，5+D"
@@ -209,11 +209,11 @@ fun BiddingSystem.addCompetitiveBidding() {
             opponent("X") {
                 "XX" - "有牌力"
                 "2C" - "Stayman"
-                "2D" - "轉移叫"
+                "2D" - "轉換叫"
             }
             "2C" - "Stayman"
-            "2D" - "轉移叫到H（問止張）"
-            "2H" - "轉移叫到S"
+            "2D" - "轉換叫到H（問止張）"
+            "2H" - "轉換叫到S"
         }
         "2C" - "自然叫，5+C" {
             "2D" - "自然叫"
@@ -262,8 +262,8 @@ fun BiddingSystem.addCompetitiveBidding() {
         }
         "1N" - "15-18點平均牌型，有S止張" {
             "2C" - "Stayman"
-            "2D" - "轉移叫到H"
-            "2H" - "轉移叫到S（問止張）"
+            "2D" - "轉換叫到H"
+            "2H" - "轉換叫到S（問止張）"
         }
         "2C" - "自然叫，5+C" {
             "2D" - "自然叫"
@@ -367,7 +367,7 @@ fun BiddingSystem.addCompetitiveBidding() {
         }
         "2N" - "15-18點，有H止張" {
             "3C" - "Puppet Stayman"
-            "3D" - "轉移叫"
+            "3D" - "轉換叫"
         }
         "3C" - "自然叫"
         "3D" - "自然叫"
@@ -396,8 +396,8 @@ fun BiddingSystem.addCompetitiveBidding() {
         }
         "2N" - "15-18點，有S止張" {
             "3C" - "Puppet Stayman"
-            "3D" - "轉移叫"
-            "3H" - "轉移叫"
+            "3D" - "轉換叫"
+            "3H" - "轉換叫"
         }
         "3C" - "自然叫"
         "3D" - "自然叫"
