@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Search, Delete, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -59,15 +59,39 @@ export function QuickSearch() {
   const expandToNode = useBidStore((state) => state.expandToNode);
   const setFocusedBid = useBidStore((state) => state.setFocusedBid);
 
-  // Sync input with focused bid
-  const currentSequence = useMemo(() => {
-    if (focusedBidId === null || !system) return [];
-    return getBidSequence(focusedBidId, system.bids);
+  // Local state for input sequence (tracks partial input)
+  const [inputBids, setInputBids] = useState<string[]>([]);
+
+  // Sync input with focused bid when it changes externally (e.g., clicking on tree)
+  useEffect(() => {
+    if (focusedBidId !== null && system) {
+      const sequence = getBidSequence(focusedBidId, system.bids);
+      setInputBids(sequence.map((b) => b.bid));
+    }
   }, [focusedBidId, system]);
+
+  // Get display sequence with bidder colors (only for matched bids)
+  const displaySequence = useMemo(() => {
+    if (!system || inputBids.length === 0) return [];
+
+    // Try to find matching bid for full sequence
+    for (const bid of system.bids) {
+      const bidSequence = getBidSequence(bid.id, system.bids);
+      if (
+        bidSequence.length === inputBids.length &&
+        bidSequence.every((b, i) => b.bid === inputBids[i])
+      ) {
+        return bidSequence;
+      }
+    }
+
+    // No exact match - return input as plain strings (no bidder info)
+    return inputBids.map((bid) => ({ bid, by: "S" as Bidder }));
+  }, [system, inputBids]);
 
   // Search results
   const searchResults = useMemo(() => {
-    if (!system || currentSequence.length === 0) return [];
+    if (!system || inputBids.length === 0) return [];
 
     const results: { id: number; sequence: BidInfo[]; meaning: string }[] = [];
 
@@ -75,11 +99,11 @@ export function QuickSearch() {
       const bidSequence = getBidSequence(bid.id, system.bids);
 
       // Check if this bid's sequence starts with the search sequence
-      if (bidSequence.length < currentSequence.length) continue;
+      if (bidSequence.length < inputBids.length) continue;
 
       let matches = true;
-      for (let i = 0; i < currentSequence.length; i++) {
-        if (bidSequence[i].bid !== currentSequence[i].bid) {
+      for (let i = 0; i < inputBids.length; i++) {
+        if (bidSequence[i].bid !== inputBids[i]) {
           matches = false;
           break;
         }
@@ -95,40 +119,52 @@ export function QuickSearch() {
     }
 
     return results.slice(0, 20); // Limit results
-  }, [system, currentSequence]);
+  }, [system, inputBids]);
 
   // Handle quick input button
   const handleInput = (value: string) => {
-    const newSequenceBids = currentSequence.map((b) => b.bid);
+    const newBids = [...inputBids];
 
     if (value === "CLEAR") {
+      setInputBids([]);
       setFocusedBid(null);
       return;
     }
 
     if (value === "BACK") {
-      newSequenceBids.pop();
-      if (newSequenceBids.length === 0) {
+      if (newBids.length > 0) {
+        const lastBid = newBids[newBids.length - 1];
+        // If last bid is a complete bid (level+suit), remove just the suit
+        if (/^[1-7][CDHSN]$/.test(lastBid)) {
+          newBids[newBids.length - 1] = lastBid[0];
+        } else {
+          newBids.pop();
+        }
+      }
+      if (newBids.length === 0) {
+        setInputBids([]);
         setFocusedBid(null);
         return;
       }
     } else {
       // Check if last item is just a level (1-7) and this is a suit
-      const lastItem = newSequenceBids[newSequenceBids.length - 1];
+      const lastItem = newBids[newBids.length - 1];
       if (lastItem && /^[1-7]$/.test(lastItem) && /^[CDHSN]$/.test(value)) {
-        newSequenceBids[newSequenceBids.length - 1] = lastItem + value;
+        newBids[newBids.length - 1] = lastItem + value;
       } else {
-        newSequenceBids.push(value);
+        newBids.push(value);
       }
     }
 
-    // Find matching bid
-    if (system && newSequenceBids.length > 0) {
+    setInputBids(newBids);
+
+    // Find matching bid and focus it
+    if (system && newBids.length > 0) {
       for (const bid of system.bids) {
         const bidSequence = getBidSequence(bid.id, system.bids);
         if (
-          bidSequence.length === newSequenceBids.length &&
-          bidSequence.every((b, i) => b.bid === newSequenceBids[i])
+          bidSequence.length === newBids.length &&
+          bidSequence.every((b, i) => b.bid === newBids[i])
         ) {
           expandToNode(bid.id);
           return;
@@ -136,22 +172,8 @@ export function QuickSearch() {
       }
     }
 
-    // No exact match found, try to find closest ancestor
-    if (system && newSequenceBids.length > 0) {
-      for (let len = newSequenceBids.length - 1; len > 0; len--) {
-        const partial = newSequenceBids.slice(0, len);
-        for (const bid of system.bids) {
-          const bidSequence = getBidSequence(bid.id, system.bids);
-          if (
-            bidSequence.length === partial.length &&
-            bidSequence.every((b, i) => b.bid === partial[i])
-          ) {
-            expandToNode(bid.id);
-            return;
-          }
-        }
-      }
-    }
+    // No exact match - clear focus but keep input
+    setFocusedBid(null);
   };
 
   // Handle result click
@@ -182,24 +204,28 @@ export function QuickSearch() {
     ));
   };
 
+  // Render input display (may include partial bids)
+  const renderInputDisplay = () => {
+    if (inputBids.length === 0) {
+      return <span className="text-muted-foreground">輸入叫品序列...</span>;
+    }
+    return renderSequence(displaySequence);
+  };
+
   return (
     <Card className="sticky top-16 z-30 mx-auto mb-4 max-w-5xl p-3">
       {/* Current sequence display */}
       <div className="mb-3 flex items-center gap-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <div className="flex-1 rounded border bg-muted/50 px-3 py-1.5 font-mono text-sm">
-          {currentSequence.length > 0 ? (
-            renderSequence(currentSequence)
-          ) : (
-            <span className="text-muted-foreground">輸入叫品序列...</span>
-          )}
+          {renderInputDisplay()}
         </div>
         <Button
           variant="ghost"
           size="icon"
           className="h-8 w-8"
           onClick={() => handleInput("BACK")}
-          disabled={currentSequence.length === 0}
+          disabled={inputBids.length === 0}
         >
           <Delete className="h-4 w-4" />
         </Button>
@@ -208,7 +234,7 @@ export function QuickSearch() {
           size="icon"
           className="h-8 w-8"
           onClick={() => handleInput("CLEAR")}
-          disabled={currentSequence.length === 0}
+          disabled={inputBids.length === 0}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -260,7 +286,7 @@ export function QuickSearch() {
       </div>
 
       {/* Search results */}
-      {searchResults.length > 0 && currentSequence.length > 0 && (
+      {searchResults.length > 0 && inputBids.length > 0 && (
         <div className="mt-3 max-h-48 space-y-1 overflow-y-auto border-t pt-2">
           {searchResults.map((result) => (
             <button
