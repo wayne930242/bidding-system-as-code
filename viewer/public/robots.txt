@@ -1,0 +1,8 @@
+# robots.txt for 洪偉橋牌隊叫牌系統
+# https://bridge-system.wayneh.tw/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://bridge-system.wayneh.tw/sitemap.xml
