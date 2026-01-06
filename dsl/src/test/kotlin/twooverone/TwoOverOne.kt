@@ -1,7 +1,6 @@
 package twooverone
 
 import com.github.phisgr.bridge.BiddingSystem
-import com.github.phisgr.bridge.writeHtml
 import com.github.phisgr.bridge.writeTo
 import java.io.File
 
@@ -110,15 +109,12 @@ val twoOverOneSystem = BiddingSystem {
     "4H" - "阻擊，8張H"
     "4S" - "阻擊，8張S"
 
-    // 爭叫系統
+    // 競叫系統
     addCompetitiveBidding()
 }
 
 fun main() {
-    val htmlFile = File("build", "2over1.html")
-    twoOverOneSystem.writeHtml(htmlFile)
-    println("Written HTML to ${htmlFile.absolutePath}")
-
+    File("build").mkdirs()
     val jsonFile = File("build", "2over1.json")
     twoOverOneSystem.writeTo(jsonFile)
     println("Written JSON to ${jsonFile.absolutePath}")

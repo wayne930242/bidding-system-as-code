@@ -12,7 +12,7 @@
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "check": "pnpm typecheck && pnpm lint && pnpm format:check",
-    "generate": "cd ../dsl && ./gradlew runTestMainClass -DmainClass=twooverone.TwoOverOneKt && ./gradlew runTestMainClass -DmainClass=fantunes.FantunesKt && mkdir -p ../viewer/public/systems && cp build/2over1.json build/fantunes.json ../viewer/public/systems/"
+    "generate": "cd ../dsl && ./gradlew runTestMainClass -DmainClass=twooverone.TwoOverOneKt -x buildHtml -x generatorTask && ./gradlew runTestMainClass -DmainClass=fantunes.FantunesKt -x buildHtml -x generatorTask && mkdir -p ../viewer/public/systems && cp build/2over1.json build/fantunes.json ../viewer/public/systems/"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.2",
@@ -20,6 +20,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@tailwindcss/typography": "^0.5.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
