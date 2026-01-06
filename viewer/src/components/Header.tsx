@@ -42,12 +42,12 @@ export function Header() {
         </DropdownMenu>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={collapseAll}>
-            <ChevronsDownUp className="mr-2 h-4 w-4" />
-            Collapse all
+            <ChevronsDownUp className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">Collapse all</span>
           </Button>
           <Button variant="outline" size="sm" onClick={expandAll}>
-            <ChevronsUpDown className="mr-2 h-4 w-4" />
-            Expand all
+            <ChevronsUpDown className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">Expand all</span>
           </Button>
           <ModeToggle />
         </div>
