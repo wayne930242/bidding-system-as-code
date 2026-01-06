@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useBidStore } from "@/store/bidStore";
-import { cn } from "@/lib/utils";
 import type { Bidder } from "@/types/bid";
 
 const suitColors: Record<string, string> = {
@@ -10,12 +9,6 @@ const suitColors: Record<string, string> = {
   S: "text-blue-600 dark:text-blue-400",
 };
 
-const bidderColors: Record<Bidder, string> = {
-  N: "bg-blue-100 dark:bg-blue-900/30",
-  S: "bg-slate-100 dark:bg-slate-800/50",
-  E: "bg-amber-100 dark:bg-amber-900/30",
-  W: "bg-rose-100 dark:bg-rose-900/30",
-};
 
 function formatBidWithColor(bid: string) {
   // Handle Pass, X, XX
@@ -151,10 +144,7 @@ export function FloatingBidSequence() {
                 return (
                   <td
                     key={bidder}
-                    className={cn(
-                      "px-2 py-1 text-center font-mono",
-                      bid && bidderColors[bidder],
-                    )}
+                    className="px-2 py-1 text-center font-mono"
                   >
                     {bid ? (
                       isOpponent ? (
