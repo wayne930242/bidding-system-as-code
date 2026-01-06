@@ -1,7 +1,3 @@
-// This import MUST be kept as a direct default import for Kotlin writeHtml compatibility.
-// Kotlin looks for the exact string: {name:"dummy",author:"file",description:"to be replaced",nextBids:[]}
-// The JSON is stringified and reparsed to prevent Vite from tree-shaking.
-import inlineSystemRaw from "../../../dsl/build/system.json";
 import type { Bid, BiddingSystem, Bidder } from "@/types/bid";
 
 export interface SystemInfo {
@@ -31,11 +27,6 @@ interface RawSystem {
   description: string;
   nextBids: RawBid[];
 }
-
-// Force the full JSON to be included in the bundle by stringifying it.
-// This prevents tree-shaking and ensures Kotlin can find/replace the placeholder.
-const inlineSystemJson = JSON.stringify(inlineSystemRaw);
-const inlineSystem = JSON.parse(inlineSystemJson) as RawSystem;
 
 function formatPreviousBids(bids: Bid[], ancestors: number[]): string {
   return ancestors
@@ -94,31 +85,15 @@ function createSystem(rawSystem: RawSystem): BiddingSystem {
 }
 
 /**
- * Load the bidding system.
- * - If systemId is provided, fetch from /systems/{systemId}.json
- * - If the inline JSON is a placeholder (name="dummy"), fetch from /systems/{defaultSystemId}.json
- * - Otherwise, use the inline JSON (Kotlin writeHtml mode)
+ * Load the bidding system from /systems/{systemId}.json
  */
 export async function loadSystem(systemId?: string): Promise<BiddingSystem> {
-  if (systemId) {
-    const systemInfo = availableSystems.find((s) => s.id === systemId);
-    if (!systemInfo) {
-      throw new Error(`Unknown system: ${systemId}`);
-    }
-    const response = await fetch(systemInfo.path);
-    const rawSystem = (await response.json()) as RawSystem;
-    return createSystem(rawSystem);
+  const id = systemId ?? defaultSystemId;
+  const systemInfo = availableSystems.find((s) => s.id === id);
+  if (!systemInfo) {
+    throw new Error(`Unknown system: ${id}`);
   }
-
-  if (inlineSystem.name === "dummy") {
-    const systemInfo = availableSystems.find((s) => s.id === defaultSystemId);
-    if (!systemInfo) {
-      throw new Error(`Default system not found: ${defaultSystemId}`);
-    }
-    const response = await fetch(systemInfo.path);
-    const rawSystem = (await response.json()) as RawSystem;
-    return createSystem(rawSystem);
-  }
-
-  return createSystem(inlineSystem);
+  const response = await fetch(systemInfo.path);
+  const rawSystem = (await response.json()) as RawSystem;
+  return createSystem(rawSystem);
 }
