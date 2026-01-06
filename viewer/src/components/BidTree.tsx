@@ -13,7 +13,7 @@ export function BidTree() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-4">
+    <div className="mx-auto max-w-5xl px-4 py-4">
       <div className="flex flex-col">
         {system.rootIds.map((id) => (
           <BidNode key={id} bidId={id} depth={0} />

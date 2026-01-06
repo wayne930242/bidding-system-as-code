@@ -30,8 +30,10 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
   const isExplanationVisible = useBidStore((state) =>
     state.isExplanationVisible(bidId),
   );
+  const focusedBidId = useBidStore((state) => state.focusedBidId);
   const toggleCollapse = useBidStore((state) => state.toggleCollapse);
   const toggleExplanation = useBidStore((state) => state.toggleExplanation);
+  const setFocusedBid = useBidStore((state) => state.setFocusedBid);
   const openDialog = useBidStore((state) => state.openDialog);
   const hideNodesBefore = useBidStore((state) => state.hideNodesBefore);
   const showAllChildren = useBidStore((state) => state.showAllChildren);
@@ -50,11 +52,22 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
 
   const handleToggleCollapse = useCallback(() => {
     if (bid?.nextBids.length) {
+      // When expanding, sync with quick search
+      if (isCollapsed) {
+        setFocusedBid(bidId);
+      }
       toggleCollapse(bidId);
     } else if (bid?.explanation) {
       toggleExplanation(bidId);
     }
-  }, [bid, bidId, toggleCollapse, toggleExplanation]);
+  }, [
+    bid,
+    bidId,
+    isCollapsed,
+    toggleCollapse,
+    toggleExplanation,
+    setFocusedBid,
+  ]);
 
   const handleHideSiblings = useCallback(() => {
     if (!bid || bid.ancestors.length === 0) return;
@@ -93,13 +106,16 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
 
   if (isHiddenByParent) return null;
 
+  const isFocused = focusedBidId === bidId;
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" data-bid-id={bidId}>
       {/* Main row */}
       <div
         className={cn(
           "group flex min-h-[40px] cursor-pointer items-center rounded-sm transition-colors hover:bg-accent/50",
           bidderBgClass[bid.by],
+          isFocused && "ring-2 ring-primary ring-offset-1",
         )}
         style={{ paddingLeft: `${depth * 24 + 8}px` }}
         onClick={handleToggleCollapse}

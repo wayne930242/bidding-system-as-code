@@ -24,6 +24,7 @@ interface BidState {
   hiddenRanges: Map<number, HiddenRange>; // parentId -> { parentId, beforeId }
   showExplanations: Set<number>;
   dialogBidId: number | null;
+  focusedBidId: number | null; // Currently focused bid for quick search sync
 
   // Actions
   setSystem: (system: BiddingSystem) => void;
@@ -34,6 +35,8 @@ interface BidState {
   collapseAll: () => void;
   hideNodesBefore: (parentId: number, beforeId: number) => void;
   showAllChildren: (parentId: number) => void;
+  expandToNode: (bidId: number) => void;
+  setFocusedBid: (bidId: number | null) => void;
   openDialog: (bidId: number) => void;
   closeDialog: () => void;
 
@@ -56,6 +59,7 @@ export const useBidStore = create<BidState>((set, get) => ({
   hiddenRanges: new Map<number, HiddenRange>(),
   showExplanations: new Set<number>(),
   dialogBidId: null,
+  focusedBidId: null,
 
   // Actions
   setSystem: (system) => {
@@ -156,6 +160,36 @@ export const useBidStore = create<BidState>((set, get) => ({
       newRanges.delete(parentId);
       return { hiddenRanges: newRanges };
     }),
+
+  expandToNode: (bidId) =>
+    set((state) => {
+      const bid = state.system?.bids[bidId];
+      if (!bid) return {};
+
+      // Expand all ancestors
+      const newCollapsed = new Set(state.collapsedNodes);
+      for (const ancestorId of bid.ancestors) {
+        newCollapsed.delete(ancestorId);
+      }
+
+      // Clear hidden ranges that would hide this node
+      const newRanges = new Map(state.hiddenRanges);
+      if (bid.ancestors.length > 0) {
+        const parentId = bid.ancestors[bid.ancestors.length - 1];
+        const hiddenRange = newRanges.get(parentId);
+        if (hiddenRange && bidId < hiddenRange.beforeId) {
+          newRanges.delete(parentId);
+        }
+      }
+
+      return {
+        collapsedNodes: newCollapsed,
+        hiddenRanges: newRanges,
+        focusedBidId: bidId,
+      };
+    }),
+
+  setFocusedBid: (bidId) => set({ focusedBidId: bidId }),
 
   openDialog: (bidId) => set({ dialogBidId: bidId }),
   closeDialog: () => set({ dialogBidId: null }),
