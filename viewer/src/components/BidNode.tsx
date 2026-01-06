@@ -14,7 +14,6 @@ import type { Bidder } from "@/types/bid";
 
 // Convention names to highlight with red/circled styling
 const CONVENTION_NAMES = [
-  // English convention names
   "Stayman",
   "Jacoby",
   "Texas",
@@ -30,19 +29,10 @@ const CONVENTION_NAMES = [
   "Namyats",
   "Ogust",
   "Gerber",
-  "Splinter",
+  "Splinter 跳叫",
   "RKC",
   "Drury",
-  // Chinese convention names
   "反常加叫",
-  "跳叫新花色",
-  "短牌組",
-  "單缺張",
-  "迫叫進局",
-  "有限加叫",
-  "簡單加叫",
-  "阻擊",
-  "割裂",
 ];
 
 // Create regex pattern for convention names (case insensitive)
