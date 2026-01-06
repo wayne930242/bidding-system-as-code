@@ -37,8 +37,8 @@ fun BiddingTree.oneClub() {
         "3N" - "19-20點均衡型"
     }
 
-    // 朗·費爾德曼2D應叫
-    "2D" - "費爾德曼約定：低花好牌滿貫意圖（6+D強牌組或5-5雙低花）" {
+    // 朗·Feldman2D應叫
+    "2D" - "Feldman約定：低花好牌滿貫意圖（6+D強牌組或5-5雙低花）" {
         feldman2D()
     }
 
@@ -111,9 +111,9 @@ private fun BiddingTree.oneDiamondResponseAfterOneClub() {
     "2N" - "19-20點均衡型"
 
     "3C" - "6+C，好牌組，15-18點"
-    "3D" - "竄叫：4D支持，D短牌組，高限"
-    "3H" - "竄叫：4D支持，H短牌組，高限"
-    "3S" - "竄叫：4D支持，S短牌組，高限"
+    "3D" - "Splinter 跳叫：4D支持，D短牌組，高限"
+    "3H" - "Splinter 跳叫：4D支持，H短牌組，高限"
+    "3S" - "Splinter 跳叫：4D支持，S短牌組，高限"
     "3N" - "16-18點，6-7張接近堅實C牌組"
 }
 
@@ -138,8 +138,8 @@ private fun BiddingTree.oneMajorResponseAfterMinor() {
     "3H" - "4張H支持，非均衡型，15-18點（如應叫為1H）"
     "3S" - "4張S支持，非均衡型，15-18點（如應叫為1S）"
 
-    // 竄叫（高限可成局）
-    "3D" - "竄叫（跳倒叫）：4張應叫花色支持，D短牌組，19+點"
+    // Splinter 跳叫（高限可成局）
+    "3D" - "Splinter 跳叫（跳倒叫）：4張應叫花色支持，D短牌組，19+點"
     // 1C-1H-3D = 4H支持，D短牌組
     // 1C-1S-3D = 4S支持，D短牌組
     // 1C-1S-3H = 4S支持，H短牌組
@@ -150,9 +150,9 @@ private fun BiddingTree.oneMajorResponseAfterMinor() {
 
     "3N" - "16-18點，6-7張接近堅實C牌組，應叫花色單張或雙張小"
 
-    // 瓦魯許割裂叫牌
-    "4C" - "瓦魯許割裂：6+C，4張應叫花色支持，滿貫意圖"
-    "4D" - "瓦魯許割裂：6+C，4張應叫花色支持，成局力量無滿貫意圖"
+    // Walsh割裂叫牌
+    "4C" - "Walsh割裂：6+C，4張應叫花色支持，滿貫意圖"
+    "4D" - "Walsh割裂：6+C，4張應叫花色支持，成局力量無滿貫意圖"
 }
 
 /**
@@ -182,12 +182,12 @@ private fun BiddingTree.invertedMinorRaise() {
     "3D" - "跳叫新花色：D短牌組，滿貫意圖"
     "3H" - "跳叫新花色：H短牌組，滿貫意圖"
     "3S" - "跳叫新花色：S短牌組，滿貫意圖"
-    "4C" - "RKC問叫（費爾德曼），C為將牌"
+    "4C" - "RKC問叫（Feldman），C為將牌"
     "3N" - "19-20點均衡型"
 }
 
 /**
- * 費爾德曼2D應叫後
+ * Feldman2D應叫後
  */
 private fun BiddingTree.feldman2D() {
     "2H" - "接力問叫" {

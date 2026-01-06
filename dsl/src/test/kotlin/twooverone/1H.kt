@@ -37,19 +37,19 @@ fun BiddingTree.oneHeart() {
         limitRaiseHeart()
     }
 
-    // 施賴伯迫叫進局跳叫
-    "3D" - "施賴伯跳叫：9-12點，4-5張H支持+單缺張，迫叫進局" {
+    // Schreiber迫叫進局跳叫
+    "3D" - "Schreiber跳叫：9-12點，4-5張H支持+單缺張，迫叫進局" {
         schreiberJumpHeart()
     }
 
-    // 迫叫性加叫（瑞士式）
-    "3S" - "竄叫：12-15點，4-5張H支持+S短牌組" {
+    // 迫叫性加叫（Swiss）
+    "3S" - "Splinter 跳叫：12-15點，4-5張H支持+S短牌組" {
         splinterAfterHeart()
     }
-    "4C" - "瑞士式：12-15點，4-5張H支持+好將牌(含2頂張)" {
+    "4C" - "Swiss：12-15點，4-5張H支持+好將牌(含2頂張)" {
         swissAfterHeart()
     }
-    "4D" - "瑞士式：12-15點，4-5張H支持+差將牌" {
+    "4D" - "Swiss：12-15點，4-5張H支持+差將牌" {
         swissAfterHeart()
     }
 
@@ -123,8 +123,8 @@ private fun BiddingTree.oneHeartAfterOneSpade() {
 
     "3N" - "16-18點，6張堅實H牌組"
 
-    "4C" - "竄叫：4S支持，C短牌組，19+點"
-    "4D" - "竄叫：4S支持，D短牌組，19+點"
+    "4C" - "Splinter 跳叫：4S支持，C短牌組，19+點"
+    "4D" - "Splinter 跳叫：4S支持，D短牌組，19+點"
     "4H" - "割裂叫牌：6+H，4S，成局牌力"
     "4S" - "止叫"
 }
@@ -202,9 +202,9 @@ private fun BiddingTree.twoOverOneAfterHeart() {
     "3D" - "3+D支持帶大牌，14-15點"
     "3H" - "好的6+H"
     "3N" - "16-18點均衡型，6張H接近堅實"
-    "4C" - "竄叫：C短牌組"
-    "4D" - "竄叫：D短牌組"
-    "4S" - "竄叫：S短牌組"
+    "4C" - "Splinter 跳叫：C短牌組"
+    "4D" - "Splinter 跳叫：D短牌組"
+    "4S" - "Splinter 跳叫：S短牌組"
 }
 
 /**
@@ -212,7 +212,7 @@ private fun BiddingTree.twoOverOneAfterHeart() {
  */
 private fun BiddingTree.limitRaiseHeart() {
     "Pass" - "12-13點均衡型低限"
-    "3S" - "馬歇問叫：問短牌組（3NT表示S短牌組）" {
+    "3S" - "Mathe問叫：問短牌組（3NT表示S短牌組）" {
         "3N" - "S短牌組"
         "4C" - "C短牌組"
         "4D" - "D短牌組"
@@ -222,7 +222,7 @@ private fun BiddingTree.limitRaiseHeart() {
 }
 
 /**
- * 施賴伯迫叫進局跳叫後
+ * Schreiber迫叫進局跳叫後
  */
 private fun BiddingTree.schreiberJumpHeart() {
     "3H" - "問牌（要求說明牌情）" {
@@ -241,20 +241,20 @@ private fun BiddingTree.schreiberJumpHeart() {
 }
 
 /**
- * 竄叫後
+ * Splinter 跳叫後
  */
 private fun BiddingTree.splinterAfterHeart() {
     "4H" - "止叫"
-    "4N" - "RKC黑木問叫"
+    "4N" - "RKCBlackwood問叫"
     // 扣叫開始滿貫試探
 }
 
 /**
- * 瑞士式加叫後
+ * Swiss加叫後
  */
 private fun BiddingTree.swissAfterHeart() {
     "4H" - "止叫"
-    "4N" - "RKC黑木問叫"
+    "4N" - "RKCBlackwood問叫"
 }
 
 /**

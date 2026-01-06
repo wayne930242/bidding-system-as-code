@@ -82,10 +82,10 @@ private fun BiddingTree.askingBidAfterSolidSuit() {
 }
 
 /**
- * 模擬司臺曼（2NT開叫或2C-2D-2NT後使用）
+ * Puppet Stayman（2NT開叫或2C-2D-2NT後使用）
  */
 private fun BiddingTree.puppetStayman() {
-    "3C" - "模擬司臺曼：問高花" {
+    "3C" - "Puppet Stayman：問高花" {
         "3D" - "有一4張高花（不叫該高花）" {
             "3H" - "有4S（讓開叫者叫4S）"
             "3S" - "有4H（讓開叫者叫4H）"
@@ -95,10 +95,10 @@ private fun BiddingTree.puppetStayman() {
         "3S" - "5張S牌組"
         "3N" - "無4張也無5張高花"
     }
-    "3D" - "傑考培轉移叫：5+H"
-    "3H" - "傑考培轉移叫：5+S"
-    "4D" - "德克薩斯轉移叫：6+H"
-    "4H" - "德克薩斯轉移叫：6+S"
+    "3D" - "Jacoby轉移叫：5+H"
+    "3H" - "Jacoby轉移叫：5+S"
+    "4D" - "Texas轉移叫：6+H"
+    "4H" - "Texas轉移叫：6+S"
     "4N" - "定量邀請"
 }
 
@@ -154,8 +154,8 @@ fun BiddingTree.weakTwoHeart() {
         "3H" - "無短牌組（6-3-2-2）"
     }
 
-    // 接力問牌力/花色牌組質量（類似奧戛斯蒂）
-    "2N" - "接力叫：問牌力和花色牌組質量" {
+    // 接力問牌力/花色牌組品質（類似Ogust）
+    "2N" - "接力叫：問牌力和花色牌組品質" {
         "3C" - "7-9點，無2頂張"
         "3D" - "7-9點，有2頂張"
         "3H" - "10-11點，無2頂張"
@@ -194,8 +194,8 @@ fun BiddingTree.weakTwoSpade() {
         "3S" - "無短牌組（6-3-2-2）"
     }
 
-    // 接力問牌力/花色牌組質量
-    "3C" - "接力叫：問牌力和花色牌組質量" {
+    // 接力問牌力/花色牌組品質
+    "3C" - "接力叫：問牌力和花色牌組品質" {
         "3D" - "7-9點，無2頂張"
         "3H" - "7-9點，有2頂張"
         "3S" - "10-11點，無2頂張"
@@ -224,8 +224,8 @@ fun BiddingTree.weakTwoSpade() {
 fun BiddingTree.twoNoTrump() {
     explanation = "21-22點均衡型（20點有5張牌組可增值）"
 
-    // 模擬司臺曼
-    "3C" - "模擬司臺曼：問高花" {
+    // Puppet Stayman
+    "3C" - "Puppet Stayman：問高花" {
         "3D" - "有一4張高花" {
             "3H" - "有4S"
             "3S" - "有4H"
@@ -236,22 +236,22 @@ fun BiddingTree.twoNoTrump() {
         "3N" - "無4張以上高花"
     }
 
-    // 傑考培轉移叫
-    "3D" - "傑考培轉移叫：5+H" {
+    // Jacoby轉移叫
+    "3D" - "Jacoby轉移叫：5+H" {
         "3H" - "接受轉移"
     }
-    "3H" - "傑考培轉移叫：5+S" {
+    "3H" - "Jacoby轉移叫：5+S" {
         "3S" - "接受轉移"
     }
 
-    // 低花司臺曼和瓦魯許接力叫仍使用
-    "3S" - "低花司臺曼"
+    // Minor Suit Stayman和Walsh接力叫仍使用
+    "3S" - "Minor Suit Stayman"
 
-    // 德克薩斯轉移叫
-    "4D" - "德克薩斯轉移叫：6+H" {
+    // Texas轉移叫
+    "4D" - "Texas轉移叫：6+H" {
         "4H" - "接受轉移"
     }
-    "4H" - "德克薩斯轉移叫：6+S" {
+    "4H" - "Texas轉移叫：6+S" {
         "4S" - "接受轉移"
     }
 
@@ -295,7 +295,7 @@ fun BiddingTree.threeNoTrump() {
     "4H" - "問叫"
     "4S" - "問叫"
 
-    "4N" - "問花色和質量" {
+    "4N" - "問花色和品質" {
         "5C" - "C牌組，無A無K"
         "5D" - "D牌組，無A無K"
         "5H" - "C牌組，有A或K"
@@ -326,7 +326,7 @@ fun BiddingTree.threeNoTrump() {
  * 好的H牌組，8贏墩
  */
 fun BiddingTree.namyatsHeart() {
-    explanation = "逆司臺曼：好的H牌組（缺K或Q但不缺A），8-8.5贏墩"
+    explanation = "Namyats：好的H牌組（缺K或Q但不缺A），8-8.5贏墩"
 
     "4D" - "示弱接力：轉回給開叫者打" {
         "4H" - "開叫者成為定約者"
@@ -345,7 +345,7 @@ fun BiddingTree.namyatsHeart() {
  * 好的S牌組，8贏墩
  */
 fun BiddingTree.namyatsSpade() {
-    explanation = "逆司臺曼：好的S牌組（缺K或Q但不缺A），8-8.5贏墩"
+    explanation = "Namyats：好的S牌組（缺K或Q但不缺A），8-8.5贏墩"
 
     "4H" - "示弱接力：轉回給開叫者打" {
         "4S" - "開叫者成為定約者"

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, type ReactNode } from "react";
 import { marked } from "marked";
 import { ChevronDown, ChevronUp, Info, List, ChevronsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,65 @@ import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { useBidStore } from "@/store/bidStore";
 import { cn } from "@/lib/utils";
 import type { Bidder } from "@/types/bid";
+
+// Convention names to highlight with red/circled styling
+const CONVENTION_NAMES = [
+  // English convention names
+  "Stayman",
+  "Jacoby",
+  "Texas",
+  "Lebensohl",
+  "Feldman",
+  "Walsh",
+  "Mathe",
+  "Schreiber",
+  "Blackwood",
+  "RKCBlackwood",
+  "Swiss",
+  "Michaels",
+  "Namyats",
+  "Ogust",
+  "Gerber",
+  "Splinter",
+  "RKC",
+  "Drury",
+  // Chinese convention names
+  "反常加叫",
+  "跳叫新花色",
+  "短牌組",
+  "單缺張",
+  "迫叫進局",
+  "有限加叫",
+  "簡單加叫",
+  "阻擊",
+  "割裂",
+];
+
+// Create regex pattern for convention names (case insensitive)
+const conventionPattern = new RegExp(`(${CONVENTION_NAMES.join("|")})`, "gi");
+
+// Format meaning text with highlighted convention names
+function formatMeaning(meaning: string): ReactNode {
+  const parts = meaning.split(conventionPattern);
+  if (parts.length === 1) return meaning;
+
+  return parts.map((part, index) => {
+    const isConvention = CONVENTION_NAMES.some(
+      (name) => name.toLowerCase() === part.toLowerCase(),
+    );
+    if (isConvention) {
+      return (
+        <span
+          key={index}
+          className="mx-0.5 inline-block rounded-full border border-red-500 bg-red-50 px-1.5 text-red-600 dark:border-red-400 dark:bg-red-950/50 dark:text-red-400"
+        >
+          {part}
+        </span>
+      );
+    }
+    return part;
+  });
+}
 
 const bidderBgClass: Record<Bidder, string> = {
   N: "bg-[--color-bidder-north]",
@@ -51,23 +110,15 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
   }, [explanation]);
 
   const handleToggleCollapse = useCallback(() => {
+    // Always update focused bid when clicking on a row
+    setFocusedBid(bidId);
+
     if (bid?.nextBids.length) {
-      // When expanding, sync with quick search
-      if (isCollapsed) {
-        setFocusedBid(bidId);
-      }
       toggleCollapse(bidId);
     } else if (bid?.explanation) {
       toggleExplanation(bidId);
     }
-  }, [
-    bid,
-    bidId,
-    isCollapsed,
-    toggleCollapse,
-    toggleExplanation,
-    setFocusedBid,
-  ]);
+  }, [bid, bidId, toggleCollapse, toggleExplanation, setFocusedBid]);
 
   const handleHideSiblings = useCallback(() => {
     if (!bid || bid.ancestors.length === 0) return;
@@ -156,7 +207,9 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
             <span className="font-medium">{displayBid}</span>
           )}
           {bid.meaning && (
-            <span className="text-muted-foreground">- {bid.meaning}</span>
+            <span className="text-muted-foreground">
+              - {formatMeaning(bid.meaning)}
+            </span>
           )}
         </div>
 

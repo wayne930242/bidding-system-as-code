@@ -35,20 +35,20 @@ fun BiddingTree.oneSpade() {
         limitRaiseSpade()
     }
 
-    // 施賴伯迫叫進局跳叫
-    "3H" - "施賴伯跳叫：9-12點，4-5張S支持+單缺張，迫叫進局" {
+    // Schreiber迫叫進局跳叫
+    "3H" - "Schreiber跳叫：9-12點，4-5張S支持+單缺張，迫叫進局" {
         schreiberJumpSpade()
     }
 
-    // 迫叫性加叫（竄叫）
-    "3N" - "竄叫：12-15點，4-5張S支持+H短牌組"
-    "4C" - "瑞士式：12-15點，4-5張S支持+好將牌(含2頂張)" {
+    // 迫叫性加叫（Splinter 跳叫）
+    "3N" - "Splinter 跳叫：12-15點，4-5張S支持+H短牌組"
+    "4C" - "Swiss：12-15點，4-5張S支持+好將牌(含2頂張)" {
         swissAfterSpade()
     }
-    "4D" - "瑞士式：12-15點，4-5張S支持+差將牌" {
+    "4D" - "Swiss：12-15點，4-5張S支持+差將牌" {
         swissAfterSpade()
     }
-    "4H" - "竄叫：12-15點，4-5張S支持+H短牌組"
+    "4H" - "Splinter 跳叫：12-15點，4-5張S支持+H短牌組"
 
     // 直接進局
     "4S" - "止叫進局"
@@ -135,9 +135,9 @@ private fun BiddingTree.twoOverOneAfterSpade() {
     "3H" - "3+H支持帶大牌，14-15點"
     "3S" - "好的6+S"
     "3N" - "16-18點均衡型，6張S接近堅實"
-    "4C" - "竄叫：C短牌組"
-    "4D" - "竄叫：D短牌組"
-    "4H" - "竄叫：H短牌組"
+    "4C" - "Splinter 跳叫：C短牌組"
+    "4D" - "Splinter 跳叫：D短牌組"
+    "4H" - "Splinter 跳叫：H短牌組"
 }
 
 /**
@@ -145,7 +145,7 @@ private fun BiddingTree.twoOverOneAfterSpade() {
  */
 private fun BiddingTree.limitRaiseSpade() {
     "Pass" - "12-13點均衡型低限"
-    "3N" - "馬歇問叫：問短牌組" {
+    "3N" - "Mathe問叫：問短牌組" {
         "4C" - "C短牌組"
         "4D" - "D短牌組"
         "4H" - "H短牌組"
@@ -155,7 +155,7 @@ private fun BiddingTree.limitRaiseSpade() {
 }
 
 /**
- * 施賴伯迫叫進局跳叫後
+ * Schreiber迫叫進局跳叫後
  */
 private fun BiddingTree.schreiberJumpSpade() {
     "3S" - "問牌（要求說明牌情）" {
@@ -174,11 +174,11 @@ private fun BiddingTree.schreiberJumpSpade() {
 }
 
 /**
- * 瑞士式加叫後
+ * Swiss加叫後
  */
 private fun BiddingTree.swissAfterSpade() {
     "4S" - "止叫"
-    "4N" - "RKC黑木問叫"
+    "4N" - "RKCBlackwood問叫"
 }
 
 /**

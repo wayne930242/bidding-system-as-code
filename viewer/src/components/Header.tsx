@@ -1,4 +1,4 @@
-import { ChevronsDownUp, ChevronsUpDown, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,8 +11,6 @@ import { useBidStore } from "@/store/bidStore";
 
 export function Header() {
   const system = useBidStore((state) => state.system);
-  const expandAll = useBidStore((state) => state.expandAll);
-  const collapseAll = useBidStore((state) => state.collapseAll);
   const availableSystems = useBidStore((state) => state.availableSystems);
   const currentSystemId = useBidStore((state) => state.currentSystemId);
   const switchSystem = useBidStore((state) => state.switchSystem);
@@ -40,17 +38,7 @@ export function Header() {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={collapseAll}>
-            <ChevronsDownUp className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:inline">Collapse all</span>
-          </Button>
-          <Button variant="outline" size="sm" onClick={expandAll}>
-            <ChevronsUpDown className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:inline">Expand all</span>
-          </Button>
-          <ModeToggle />
-        </div>
+        <ModeToggle />
       </div>
     </header>
   );

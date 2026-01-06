@@ -74,9 +74,9 @@ private fun BiddingTree.oneMajorResponseAfterDiamond() {
     "3H" - "4張H支持，非均衡型，15-18點（如應叫為1H）"
     "3S" - "4張S支持，非均衡型，15-18點（如應叫為1S）"
 
-    // 竄叫
+    // Splinter 跳叫
     // 1D-1S-3H = 跳倒叫，4S支持，H短牌組，19+點
-    "3C" - "竄叫（二級跳）：4張應叫花色支持，C短牌組，19+點"
+    "3C" - "Splinter 跳叫（二級跳）：4張應叫花色支持，C短牌組，19+點"
 
     // 直接進局（高限均衡型）
     "4H" - "4張H支持，均衡型，19+點（如應叫為1H）"
@@ -84,9 +84,9 @@ private fun BiddingTree.oneMajorResponseAfterDiamond() {
 
     "3N" - "16-18點，6-7張接近堅實D牌組"
 
-    // 瓦魯許割裂叫牌
-    "4C" - "瓦魯許割裂：6+D，4張應叫花色支持，成局力量無滿貫意圖"
-    "4D" - "瓦魯許割裂：6+D，4張應叫花色支持，滿貫意圖"
+    // Walsh割裂叫牌
+    "4C" - "Walsh割裂：6+D，4張應叫花色支持，成局力量無滿貫意圖"
+    "4D" - "Walsh割裂：6+D，4張應叫花色支持，滿貫意圖"
 }
 
 /**
@@ -115,7 +115,7 @@ private fun BiddingTree.invertedDiamondRaise() {
     "3H" - "跳叫新花色：H短牌組，滿貫意圖"
     "3S" - "跳叫新花色：S短牌組，滿貫意圖"
     "4C" - "跳叫新花色：C短牌組，滿貫意圖"
-    "4D" - "RKC問叫（費爾德曼），D為將牌"
+    "4D" - "RKC問叫（Feldman），D為將牌"
     "3N" - "19-20點均衡型"
 }
 
@@ -129,7 +129,7 @@ private fun BiddingTree.twoClubAfterOneDiamond() {
     "2N" - "12-14點均衡型，無5+D"
     "3C" - "3+C支持帶大牌，14-15點"
     "3D" - "好的6+D"
-    "3H" - "竄叫：C支持，H短牌組"
-    "3S" - "竄叫：C支持，S短牌組"
+    "3H" - "Splinter 跳叫：C支持，H短牌組"
+    "3S" - "Splinter 跳叫：C支持，S短牌組"
     "3N" - "16-18點，6-7張接近堅實D牌組"
 }

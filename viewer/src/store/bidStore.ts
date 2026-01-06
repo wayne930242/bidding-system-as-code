@@ -31,8 +31,6 @@ interface BidState {
   switchSystem: (systemId: string) => Promise<void>;
   toggleCollapse: (id: number) => void;
   toggleExplanation: (id: number) => void;
-  expandAll: () => void;
-  collapseAll: () => void;
   hideNodesBefore: (parentId: number, beforeId: number) => void;
   showAllChildren: (parentId: number) => void;
   expandToNode: (bidId: number) => void;
@@ -119,32 +117,6 @@ export const useBidStore = create<BidState>((set, get) => ({
         newSet.add(id);
       }
       return { showExplanations: newSet };
-    }),
-
-  expandAll: () =>
-    set({
-      collapsedNodes: new Set<number>(),
-      showExplanations: new Set(
-        get()
-          .system?.bids.filter((b) => b.explanation)
-          .map((b) => b.id) ?? [],
-      ),
-      hiddenRanges: new Map(),
-    }),
-
-  collapseAll: () =>
-    set((state) => {
-      const collapsed = new Set<number>();
-      state.system?.bids.forEach((bid) => {
-        if (bid.nextBids.length > 0) {
-          collapsed.add(bid.id);
-        }
-      });
-      return {
-        collapsedNodes: collapsed,
-        showExplanations: new Set<number>(),
-        hiddenRanges: new Map(),
-      };
     }),
 
   hideNodesBefore: (parentId, beforeId) =>

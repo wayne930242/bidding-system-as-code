@@ -10,21 +10,21 @@ fun BiddingTree.oneNoTrump() {
     explanation = "16-18 HCP均衡型，無單張和缺門"
 
     // Stayman
-    "2C" - "司臺曼：問4張高花，7+點；或7-8點接力邀叫2NT" {
+    "2C" - "Stayman：問4張高花，7+點；或7-8點接力邀叫2NT" {
         stayman()
     }
 
     // Jacoby Transfer
-    "2D" - "傑考培轉移叫：5+H，或單牌組滿貫試探" {
+    "2D" - "Jacoby轉移叫：5+H，或單牌組滿貫試探" {
         jacobyToHearts()
     }
 
-    "2H" - "傑考培轉移叫：5+S" {
+    "2H" - "Jacoby轉移叫：5+S" {
         jacobyToSpades()
     }
 
     // Minor Suit Stayman
-    "2S" - "低花司臺曼：問4張低花，或D長牌組弱牌，或5-4+雙低花滿貫意圖" {
+    "2S" - "低花Stayman：問4張低花，或D長牌組弱牌，或5-4+雙低花滿貫意圖" {
         minorSuitStayman()
     }
 
@@ -45,22 +45,22 @@ fun BiddingTree.oneNoTrump() {
     "3S" - "6-7張不連張S牌組，邀叫滿貫"
 
     // Gerber
-    "4C" - "葛伯問A" {
+    "4C" - "Gerber問A" {
         gerber()
     }
 
     // Texas Transfer
-    "4D" - "德克薩斯轉移叫：6+H" {
+    "4D" - "Texas轉移叫：6+H" {
         "4H" - "接受轉移" {
             "Pass" - "止叫"
-            "4N" - "RKC黑木問叫，H為將牌"
+            "4N" - "RKCBlackwood問叫，H為將牌"
         }
     }
 
-    "4H" - "德克薩斯轉移叫：6+S" {
+    "4H" - "Texas轉移叫：6+S" {
         "4S" - "接受轉移" {
             "Pass" - "止叫"
-            "4N" - "RKC黑木問叫，S為將牌"
+            "4N" - "RKCBlackwood問叫，S為將牌"
         }
     }
 
@@ -80,7 +80,7 @@ fun BiddingTree.oneNoTrump() {
 }
 
 /**
- * 司臺曼叫牌
+ * Stayman叫牌
  */
 private fun BiddingTree.stayman() {
     "2D" - "無4張高花" {
@@ -121,7 +121,7 @@ private fun BiddingTree.stayman() {
                 "4H" - "S短牌組"
             }
         }
-        "4C" - "RKC葛伯問叫，H為將牌"
+        "4C" - "RKC Gerber問叫，H為將牌"
         "4D" - "發現H配合，無單缺張，15-16點滿貫意圖"
         "4H" - "止叫"
     }
@@ -136,7 +136,7 @@ private fun BiddingTree.stayman() {
             }
         }
         "3S" - "邀叫"
-        "4C" - "RKC葛伯問叫，S為將牌"
+        "4C" - "RKC Gerber問叫，S為將牌"
         "4D" - "發現S配合，無單缺張，15-16點滿貫意圖"
         "4S" - "止叫"
         "3N" - "無4S，止叫"
@@ -144,8 +144,8 @@ private fun BiddingTree.stayman() {
 }
 
 /**
- * 傑考培轉移叫到H
- * 可能是5+H，或單牌組滿貫試探(瓦魯許接力叫)
+ * Jacoby轉移叫到H
+ * 可能是5+H，或單牌組滿貫試探(Walsh接力叫)
  */
 private fun BiddingTree.jacobyToHearts() {
     "2H" - "接受轉移" {
@@ -163,8 +163,8 @@ private fun BiddingTree.jacobyToHearts() {
         "3N" - "5張牌組均衡型，選擇止叫"
         "4C" - "5+H-5+C滿貫試探"
         "4D" - "5+H-5+D滿貫試探"
-        "4H" - "止叫（有一點滿貫意圖，否則用德克薩斯）"
-        "4N" - "表示牌力（非黑木），堅實5張H牌組"
+        "4H" - "止叫（有一點滿貫意圖，否則用Texas）"
+        "4N" - "表示牌力（非Blackwood），堅實5張H牌組"
     }
 
     // 開叫者超級接受
@@ -177,7 +177,7 @@ private fun BiddingTree.jacobyToHearts() {
 }
 
 /**
- * 傑考培轉移叫到S
+ * Jacoby轉移叫到S
  */
 private fun BiddingTree.jacobyToSpades() {
     "2S" - "接受轉移" {
@@ -192,7 +192,7 @@ private fun BiddingTree.jacobyToSpades() {
         "4D" - "5+S-5+D滿貫試探"
         "4H" - "5+S-5+H選擇止叫"
         "4S" - "止叫"
-        "4N" - "表示牌力（非黑木），堅實5張S牌組"
+        "4N" - "表示牌力（非Blackwood），堅實5張S牌組"
     }
 
     // 開叫者超級接受
@@ -205,7 +205,7 @@ private fun BiddingTree.jacobyToSpades() {
 }
 
 /**
- * 低花司臺曼
+ * 低花Stayman
  */
 private fun BiddingTree.minorSuitStayman() {
     "2N" - "無4張低花" {
@@ -231,7 +231,7 @@ private fun BiddingTree.minorSuitStayman() {
 }
 
 /**
- * 瓦魯許接力叫（單牌組滿貫試探）
+ * Walsh接力叫（單牌組滿貫試探）
  */
 private fun BiddingTree.warushiRelay() {
     "3C" - "不連張C牌組"
@@ -245,7 +245,7 @@ private fun BiddingTree.warushiRelay() {
 }
 
 /**
- * 葛伯問A
+ * Gerber問A
  */
 private fun BiddingTree.gerber() {
     "4D" - "0或3個A"
@@ -255,12 +255,12 @@ private fun BiddingTree.gerber() {
 }
 
 /**
- * 萊朋梭爾約定叫（干擾後使用）
+ * Lebensohl約定叫（干擾後使用）
  */
 private fun BiddingTree.lebensohl() {
     remark(responder, "2NT為接力叫，要求開叫者叫3C")
     remark(responder, "立即跳叫3NT表示無爭叫花色止張")
-    remark(responder, "立即扣叫為司臺曼，無爭叫花色止張")
+    remark(responder, "立即扣叫為Stayman，無爭叫花色止張")
     remark(responder, "經2NT接力後再叫3NT表示有爭叫花色止張")
-    remark(responder, "經2NT接力後再扣叫為司臺曼，有爭叫花色止張")
+    remark(responder, "經2NT接力後再扣叫為Stayman，有爭叫花色止張")
 }
