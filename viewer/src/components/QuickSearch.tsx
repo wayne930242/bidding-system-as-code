@@ -213,7 +213,7 @@ export function QuickSearch() {
   };
 
   return (
-    <Card className="sticky top-16 z-30 mx-auto mb-4 max-w-5xl p-3">
+    <Card className="mx-auto mb-4 max-w-5xl p-3">
       {/* Current sequence display */}
       <div className="mb-3 flex items-center gap-2">
         <Search className="h-4 w-4 text-muted-foreground" />
