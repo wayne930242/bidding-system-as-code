@@ -185,6 +185,7 @@ private fun BiddingTree.swissAfterSpade() {
  * 支持性賭倍
  */
 private fun BiddingTree.supportDoubleSpade() {
-    remark(opener, "賭倍表示對應叫花色有3張支持")
-    remark(opener, "簡單加叫表示4張支持")
+    "X" - "支持性賭倍：3張應叫花色支持"
+    "2S" - "簡單加叫：4+張支持"
+    "Pass" - "2張或更少支持"
 }

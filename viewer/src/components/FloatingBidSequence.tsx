@@ -9,6 +9,8 @@ const suitColors: Record<string, string> = {
   S: "text-blue-600 dark:text-blue-400",
 };
 
+// Valid bid pattern - filters out remarks
+const validBidPattern = /^(Pass|P|X|XX|\d[CDHSN]T?)$/i;
 
 function formatBidWithColor(bid: string) {
   // Handle Pass, X, XX
@@ -51,7 +53,10 @@ export function FloatingBidSequence() {
     if (!currentBid) return null;
 
     const bidIds = [...currentBid.ancestors, focusedBidId];
-    return bidIds.map((id) => system.bids[id]);
+    // Filter out remarks (bids that don't match valid bid pattern)
+    return bidIds
+      .map((id) => system.bids[id])
+      .filter((bid) => validBidPattern.test(bid.bid));
   }, [system, focusedBidId]);
 
   if (!sequence || sequence.length === 0) return null;
@@ -142,10 +147,7 @@ export function FloatingBidSequence() {
                 const bid = row[bidder];
                 const isOpponent = bidder === "E" || bidder === "W";
                 return (
-                  <td
-                    key={bidder}
-                    className="px-2 py-1 text-center font-mono"
-                  >
+                  <td key={bidder} className="px-2 py-1 text-center font-mono">
                     {bid ? (
                       isOpponent ? (
                         <span className="text-muted-foreground">

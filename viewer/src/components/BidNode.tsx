@@ -13,30 +13,46 @@ import { cn } from "@/lib/utils";
 import type { Bidder } from "@/types/bid";
 
 // Convention names to highlight with red/circled styling
+// Longer names first to avoid partial matches (e.g. "Minor Suit Stayman" before "Stayman")
 const CONVENTION_NAMES = [
+  "Minor Suit Stayman",
+  "Puppet Stayman",
+  "RKCBlackwood",
+  "RKC Blackwood",
+  "Splinter跳叫",
+  "Mathe問叫",
+  "反常加叫",
   "Stayman",
   "Jacoby",
   "Texas",
   "Lebensohl",
   "Feldman",
   "Walsh",
-  "Mathe問叫",
   "Schreiber",
   "Blackwood",
-  "RKCBlackwood",
   "Swiss",
   "Michaels",
   "Namyats",
   "Ogust",
   "Gerber",
-  "Splinter跳叫",
   "RKC",
   "Drury",
-  "反常加叫",
+  "Unusual",
+  "DONT",
 ];
 
 // Create regex pattern for convention names (case insensitive)
-const conventionPattern = new RegExp(`(${CONVENTION_NAMES.join("|")})`, "gi");
+// Sort by length (longest first) to ensure longer matches take precedence
+const sortedConventionNames = [...CONVENTION_NAMES].sort(
+  (a, b) => b.length - a.length,
+);
+const conventionPattern = new RegExp(
+  `(${sortedConventionNames.join("|")})`,
+  "gi",
+);
+
+// Valid bid pattern - anything else is a remark
+const validBidPattern = /^(Pass|P|X|XX|\d[CDHSN]T?)$/i;
 
 // Format meaning text with highlighted convention names
 function formatMeaning(meaning: string): ReactNode {
@@ -44,7 +60,7 @@ function formatMeaning(meaning: string): ReactNode {
   if (parts.length === 1) return meaning;
 
   return parts.map((part, index) => {
-    const isConvention = CONVENTION_NAMES.some(
+    const isConvention = sortedConventionNames.some(
       (name) => name.toLowerCase() === part.toLowerCase(),
     );
     if (isConvention) {
@@ -110,17 +126,25 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
     }
   }, [bid, bidId, toggleCollapse, toggleExplanation, setFocusedBid]);
 
-  const handleHideSiblings = useCallback(() => {
+  const handleToggleSiblings = useCallback(() => {
     if (!bid || bid.ancestors.length === 0) return;
     const parentId = bid.ancestors[bid.ancestors.length - 1];
-    hideNodesBefore(parentId, bidId);
-  }, [bid, bidId, hideNodesBefore]);
+    const currentRange = hiddenRanges.get(parentId);
+    if (currentRange && currentRange.beforeId === bidId) {
+      // Already hidden at this point, so show all
+      showAllChildren(parentId);
+    } else {
+      // Hide siblings before this bid
+      hideNodesBefore(parentId, bidId);
+    }
+  }, [bid, bidId, hideNodesBefore, showAllChildren, hiddenRanges]);
 
   if (!bid) return null;
 
   const hasChildren = bid.nextBids.length > 0;
   const hasExplanation = !!bid.explanation;
   const isOpponent = bid.by === "E" || bid.by === "W";
+  const isRemark = !validBidPattern.test(bid.bid);
   const displayBid = isOpponent ? `(${bid.bid})` : bid.bid;
 
   // Check if this node should show hidden children indicator
@@ -155,7 +179,8 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
       <div
         className={cn(
           "group flex min-h-[40px] cursor-pointer items-center rounded-sm transition-colors hover:bg-accent/50",
-          bidderBgClass[bid.by],
+          !isRemark && bidderBgClass[bid.by],
+          isRemark && "bg-muted italic",
           isFocused && "ring-2 ring-primary ring-offset-1",
         )}
         style={{ paddingLeft: `${depth * 24 + 8}px` }}
@@ -233,13 +258,13 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
                   className="h-7 w-7"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleHideSiblings();
+                    handleToggleSiblings();
                   }}
                 >
                   <ChevronsUp className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Hide Lower Bids</TooltipContent>
+              <TooltipContent>Toggle Lower Bids</TooltipContent>
             </Tooltip>
           )}
 
@@ -267,11 +292,14 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
       {/* Hidden children indicator */}
       {hiddenChildrenText && (
         <button
-          className="ml-8 mt-1 rounded bg-muted px-2 py-1 text-left text-xs text-muted-foreground hover:bg-muted/80"
+          className="mt-1 rounded bg-amber-100 px-2 py-1 text-left text-xs text-amber-800 hover:bg-amber-200 dark:bg-amber-900 dark:text-amber-100 dark:hover:bg-amber-800"
           style={{ marginLeft: `${depth * 24 + 32}px` }}
-          onClick={() => showAllChildren(bidId)}
+          onClick={(e) => {
+            e.stopPropagation();
+            showAllChildren(bidId);
+          }}
         >
-          Hidden: {hiddenChildrenText}
+          ▸ 展開隱藏的叫品: {hiddenChildrenText}
         </button>
       )}
 
