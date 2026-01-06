@@ -12,7 +12,7 @@
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "check": "pnpm typecheck && pnpm lint && pnpm format:check",
-    "generate": "cd ../dsl && ./gradlew runTestMainClass -DmainClass=fantunes.FantunesKt && cp build/fantunes.json ../viewer/public/system.json"
+    "generate": "cd ../dsl && ./gradlew runTestMainClass -DmainClass=twooverone.TwoOverOneKt && ./gradlew runTestMainClass -DmainClass=fantunes.FantunesKt && mkdir -p ../viewer/public/systems && cp build/2over1.json build/fantunes.json ../viewer/public/systems/"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.2",

@@ -1,5 +1,11 @@
 import { create } from "zustand";
 import type { BiddingSystem } from "@/types/bid";
+import {
+  loadSystem,
+  availableSystems,
+  defaultSystemId,
+  type SystemInfo,
+} from "@/data/system";
 
 interface HiddenRange {
   parentId: number;
@@ -9,6 +15,9 @@ interface HiddenRange {
 interface BidState {
   // Data
   system: BiddingSystem | null;
+  currentSystemId: string;
+  availableSystems: SystemInfo[];
+  isLoading: boolean;
 
   // UI State
   collapsedNodes: Set<number>;
@@ -18,6 +27,7 @@ interface BidState {
 
   // Actions
   setSystem: (system: BiddingSystem) => void;
+  switchSystem: (systemId: string) => Promise<void>;
   toggleCollapse: (id: number) => void;
   toggleExplanation: (id: number) => void;
   expandAll: () => void;
@@ -37,6 +47,9 @@ interface BidState {
 export const useBidStore = create<BidState>((set, get) => ({
   // Data
   system: null,
+  currentSystemId: defaultSystemId,
+  availableSystems,
+  isLoading: false,
 
   // UI State - start with all nodes collapsed (only roots visible)
   collapsedNodes: new Set<number>(),
@@ -54,6 +67,32 @@ export const useBidStore = create<BidState>((set, get) => ({
       }
     });
     set({ system, collapsedNodes: collapsed });
+  },
+
+  switchSystem: async (systemId) => {
+    if (systemId === get().currentSystemId) return;
+    set({ isLoading: true });
+    try {
+      const system = await loadSystem(systemId);
+      const collapsed = new Set<number>();
+      system.bids.forEach((bid) => {
+        if (bid.nextBids.length > 0) {
+          collapsed.add(bid.id);
+        }
+      });
+      set({
+        system,
+        currentSystemId: systemId,
+        collapsedNodes: collapsed,
+        hiddenRanges: new Map(),
+        showExplanations: new Set(),
+        dialogBidId: null,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("Failed to load system:", error);
+      set({ isLoading: false });
+    }
   },
 
   toggleCollapse: (id) =>

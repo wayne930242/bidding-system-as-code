@@ -4,6 +4,19 @@
 import inlineSystemRaw from "../../../dsl/build/system.json";
 import type { Bid, BiddingSystem, Bidder } from "@/types/bid";
 
+export interface SystemInfo {
+  id: string;
+  name: string;
+  path: string;
+}
+
+export const availableSystems: SystemInfo[] = [
+  { id: "2over1", name: "二蓋一進局體系", path: "/systems/2over1.json" },
+  { id: "fantunes", name: "Fantoni-Nunes", path: "/systems/fantunes.json" },
+];
+
+export const defaultSystemId = "2over1";
+
 interface RawBid {
   bid: string;
   by: string;
@@ -82,12 +95,27 @@ function createSystem(rawSystem: RawSystem): BiddingSystem {
 
 /**
  * Load the bidding system.
- * - If the inline JSON is a placeholder (name="dummy"), fetch from /system.json
+ * - If systemId is provided, fetch from /systems/{systemId}.json
+ * - If the inline JSON is a placeholder (name="dummy"), fetch from /systems/{defaultSystemId}.json
  * - Otherwise, use the inline JSON (Kotlin writeHtml mode)
  */
-export async function loadSystem(): Promise<BiddingSystem> {
+export async function loadSystem(systemId?: string): Promise<BiddingSystem> {
+  if (systemId) {
+    const systemInfo = availableSystems.find((s) => s.id === systemId);
+    if (!systemInfo) {
+      throw new Error(`Unknown system: ${systemId}`);
+    }
+    const response = await fetch(systemInfo.path);
+    const rawSystem = (await response.json()) as RawSystem;
+    return createSystem(rawSystem);
+  }
+
   if (inlineSystem.name === "dummy") {
-    const response = await fetch("/system.json");
+    const systemInfo = availableSystems.find((s) => s.id === defaultSystemId);
+    if (!systemInfo) {
+      throw new Error(`Default system not found: ${defaultSystemId}`);
+    }
+    const response = await fetch(systemInfo.path);
     const rawSystem = (await response.json()) as RawSystem;
     return createSystem(rawSystem);
   }

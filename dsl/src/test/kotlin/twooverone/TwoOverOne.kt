@@ -2,6 +2,7 @@ package twooverone
 
 import com.github.phisgr.bridge.BiddingSystem
 import com.github.phisgr.bridge.writeHtml
+import com.github.phisgr.bridge.writeTo
 import java.io.File
 
 /**
@@ -15,10 +16,10 @@ val twoOverOneSystem = BiddingSystem {
         二蓋一進局體系（2/1 Game Force）是美國標準叫牌法的變體。
 
         ## 主要特點
-        - 二蓋一應叫逼叫成局
+        - 二蓋一應叫迫叫成局
         - 1NT 開叫 16-18 HCP
         - 5張高花開叫
-        - 逼叫性 1NT 應叫
+        - 迫叫性 1NT 應叫
 
         ## 約定叫
         - Stayman / Jacoby Transfer / Texas Transfer
@@ -53,13 +54,13 @@ val twoOverOneSystem = BiddingSystem {
         oneNoTrump()
     }
 
-    // 2C 開叫 (強逼叫)
+    // 2C 開叫 (強迫叫)
     "2C" - "強牌，23+均衡或8+贏墩" {
         twoClubStrong()
     }
 
-    // 2D 開叫 (三色套)
-    "2D" - "三色套4-4-4-1或4-4-5-0，10-13點" {
+    // 2D 開叫 (三色排組)
+    "2D" - "三色排組4-4-4-1或4-4-5-0，10-13點" {
         twoDiamondMulti()
     }
 
@@ -93,24 +94,32 @@ val twoOverOneSystem = BiddingSystem {
     }
 
     // 3NT 開叫 (Gambling)
-    "3N" - "8張不連張低花套" {
+    "3N" - "8張不連張低花排組" {
         threeNoTrump()
     }
 
     // 4C/4D Namyats
-    "4C" - "Namyats：好的H套，8贏墩" {
+    "4C" - "Namyats：好的H排組，8贏墩" {
         namyatsHeart()
     }
-    "4D" - "Namyats：好的S套，8贏墩" {
+    "4D" - "Namyats：好的S排組，8贏墩" {
         namyatsSpade()
     }
 
     // 4H/4S 阻擊
     "4H" - "阻擊，8張H"
     "4S" - "阻擊，8張S"
+
+    // 爭叫系統
+    addCompetitiveBidding()
 }
 
 fun main() {
-    twoOverOneSystem.writeHtml(File("2over1.html"))
-    println("Generated 2over1.html")
+    val htmlFile = File("build", "2over1.html")
+    twoOverOneSystem.writeHtml(htmlFile)
+    println("Written HTML to ${htmlFile.absolutePath}")
+
+    val jsonFile = File("build", "2over1.json")
+    twoOverOneSystem.writeTo(jsonFile)
+    println("Written JSON to ${jsonFile.absolutePath}")
 }
