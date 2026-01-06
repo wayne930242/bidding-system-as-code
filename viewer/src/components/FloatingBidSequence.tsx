@@ -10,7 +10,8 @@ const suitColors: Record<string, string> = {
 };
 
 // Valid bid pattern - filters out remarks
-const validBidPattern = /^(Pass|P|X|XX|\d[CDHSN]T?)$/i;
+// Includes M (major), m (minor), any (any suit) as generic patterns
+const validBidPattern = /^(Pass|P|X|XX|\d[CDHSNMm]T?|\dany)$/i;
 
 function formatBidWithColor(bid: string) {
   // Handle Pass, X, XX
@@ -23,14 +24,31 @@ function formatBidWithColor(bid: string) {
       <span className="text-blue-600 dark:text-blue-400 font-bold">XX</span>
     );
 
-  // Handle bids like 1C, 2H, 3NT
-  const match = bid.match(/^(\d)([CDHS]|N|NT?)$/i);
+  // Handle generic patterns like 2any
+  if (/^\dany$/i.test(bid)) {
+    return <span className="text-muted-foreground italic">{bid}</span>;
+  }
+
+  // Handle bids like 1C, 2H, 3NT, 4M, 5m
+  const match = bid.match(/^(\d)([CDHSMm]|N|NT?)$/i);
   if (match) {
     const [, level, suit] = match;
     const suitUpper = suit.toUpperCase();
     const suitDisplay =
-      suitUpper === "N" || suitUpper === "NT" ? "NT" : suitUpper;
-    const colorClass = suitColors[suitUpper] || "";
+      suitUpper === "N" || suitUpper === "NT"
+        ? "NT"
+        : suitUpper === "M"
+          ? "M"
+          : suit === "m"
+            ? "m"
+            : suitUpper;
+    // M = major (red-ish), m = minor (green-ish)
+    const colorClass =
+      suitUpper === "M"
+        ? "text-purple-600 dark:text-purple-400"
+        : suit === "m"
+          ? "text-teal-600 dark:text-teal-400"
+          : suitColors[suitUpper] || "";
     return (
       <span>
         {level}

@@ -52,7 +52,8 @@ const conventionPattern = new RegExp(
 );
 
 // Valid bid pattern - anything else is a remark
-const validBidPattern = /^(Pass|P|X|XX|\d[CDHSN]T?)$/i;
+// Includes M (major), m (minor), any (any suit) as generic patterns
+const validBidPattern = /^(Pass|P|X|XX|\d[CDHSNMm]T?|\dany)$/i;
 
 // Format meaning text with highlighted convention names
 function formatMeaning(meaning: string): ReactNode {
