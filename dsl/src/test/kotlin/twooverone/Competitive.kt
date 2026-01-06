@@ -19,7 +19,7 @@ fun BiddingSystem.addCompetitiveBidding() {
 ### 蓋叫
 - 簡單蓋叫：7-17點，5+張好牌組
 - 跳蓋叫：阻擊性，6-7張牌組
-- 1NT蓋叫：15-18點均衡型，有開叫花色止張
+- 1NT蓋叫：15-18點平均牌型，有開叫花色止張
 - Unusual 2NT：5-5+兩個最低未叫花色
 - Michaels 扣叫：5-4+未叫花色
 
@@ -92,7 +92,7 @@ fun BiddingSystem.addCompetitiveBidding() {
             "2N" - "有限加叫"
             "3S" - "阻擊性"
         }
-        "1N" - "15-18點均衡型，有C止張" {
+        "1N" - "15-18點平均牌型，有C止張" {
             "2C" - "Stayman"
             "2D" - "轉移叫到H"
             "2H" - "轉移叫到S"
@@ -149,7 +149,7 @@ fun BiddingSystem.addCompetitiveBidding() {
             "2N" - "有限加叫"
             "3S" - "阻擊性"
         }
-        "1N" - "15-18點均衡型，有D止張" {
+        "1N" - "15-18點平均牌型，有D止張" {
             "2C" - "Stayman"
             "2D" - "轉移叫到H"
             "2H" - "轉移叫到S"
@@ -205,7 +205,7 @@ fun BiddingSystem.addCompetitiveBidding() {
             "2N" - "有限加叫"
             "3S" - "阻擊性"
         }
-        "1N" - "15-18點均衡型，有H止張" {
+        "1N" - "15-18點平均牌型，有H止張" {
             opponent("X") {
                 "XX" - "有牌力"
                 "2C" - "Stayman"
@@ -260,7 +260,7 @@ fun BiddingSystem.addCompetitiveBidding() {
             "2N" - "11-12點邀叫"
             "3H" - "跳叫＝好牌組"
         }
-        "1N" - "15-18點均衡型，有S止張" {
+        "1N" - "15-18點平均牌型，有S止張" {
             "2C" - "Stayman"
             "2D" - "轉移叫到H"
             "2H" - "轉移叫到S（問止張）"

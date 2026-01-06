@@ -43,7 +43,7 @@ fun BiddingTree.oneHeart() {
     }
 
     // 迫叫性加叫（Swiss）
-    "3S" - "Splinter 跳叫：12-15點，4-5張H支持+S短牌組" {
+    "3S" - "Splinter跳叫：12-15點，4-5張H支持+S短牌組" {
         splinterAfterHeart()
     }
     "4C" - "Swiss：12-15點，4-5張H支持+好將牌(含2頂張)" {
@@ -73,7 +73,7 @@ fun BiddingTree.oneHeart() {
  * 1H-1S後的開叫者再叫
  */
 private fun BiddingTree.oneHeartAfterOneSpade() {
-    "1N" - "低限均衡型，12-15點，5-3-3-2" {
+    "1N" - "低限平均牌型，12-15點，5-3-3-2" {
         // 應叫者再叫
         "2C" - "新低花牌組迫叫"
         "2D" - "新低花牌組迫叫"
@@ -112,7 +112,7 @@ private fun BiddingTree.oneHeartAfterOneSpade() {
         "4S" - "止叫"
     }
 
-    "2N" - "18-19點均衡型，迫叫一輪"
+    "2N" - "18-19點平均牌型，迫叫一輪"
 
     "3C" - "跳叫新花色：5+H-4+C，19+點迫叫進局"
     "3D" - "跳叫新花色：5+H-4+D，19+點迫叫進局"
@@ -123,8 +123,8 @@ private fun BiddingTree.oneHeartAfterOneSpade() {
 
     "3N" - "16-18點，6張堅實H牌組"
 
-    "4C" - "Splinter 跳叫：4S支持，C短牌組，19+點"
-    "4D" - "Splinter 跳叫：4S支持，D短牌組，19+點"
+    "4C" - "Splinter跳叫：4S支持，C短牌組，19+點"
+    "4D" - "Splinter跳叫：4S支持，D短牌組，19+點"
     "4H" - "割裂叫牌：6+H，4S，成局牌力"
     "4S" - "止叫"
 }
@@ -197,26 +197,26 @@ private fun BiddingTree.twoOverOneAfterHeart() {
     "2D" - "4+D（形同倒叫但不需額外牌力）"
     "2H" - "6+H，或5H無其他可叫"
     "2S" - "4S（倒叫但不需額外牌力）"
-    "2N" - "13-15點均衡型，未叫過花色有大牌"
+    "2N" - "13-15點平均牌型，未叫過花色有大牌"
     "3C" - "3+C支持帶大牌，14-15點"
     "3D" - "3+D支持帶大牌，14-15點"
     "3H" - "好的6+H"
-    "3N" - "16-18點均衡型，6張H接近堅實"
-    "4C" - "Splinter 跳叫：C短牌組"
-    "4D" - "Splinter 跳叫：D短牌組"
-    "4S" - "Splinter 跳叫：S短牌組"
+    "3N" - "16-18點平均牌型，6張H接近堅實"
+    "4C" - "Splinter跳叫：C短牌組"
+    "4D" - "Splinter跳叫：D短牌組"
+    "4S" - "Splinter跳叫：S短牌組"
 }
 
 /**
  * 有限加叫後的開叫者再叫
  */
 private fun BiddingTree.limitRaiseHeart() {
-    "Pass" - "12-13點均衡型低限"
+    "Pass" - "12-13點平均牌型低限"
     "3S" - "Mathe問叫：問短牌組（3NT表示S短牌組）" {
         "3N" - "S短牌組"
         "4C" - "C短牌組"
         "4D" - "D短牌組"
-        "4H" - "無短牌組（半均衡型）"
+        "4H" - "無短牌組（半平均牌型）"
     }
     "4H" - "接受邀叫"
 }
@@ -241,7 +241,7 @@ private fun BiddingTree.schreiberJumpHeart() {
 }
 
 /**
- * Splinter 跳叫後
+ * Splinter跳叫後
  */
 private fun BiddingTree.splinterAfterHeart() {
     "4H" - "止叫"

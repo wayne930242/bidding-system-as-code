@@ -4,10 +4,10 @@ import com.github.phisgr.bridge.BiddingTree
 
 /**
  * 1NT 開叫及應叫
- * 16-18 HCP 均衡型
+ * 16-18 HCP 平均牌型
  */
 fun BiddingTree.oneNoTrump() {
-    explanation = "16-18 HCP均衡型，無單張和缺門"
+    explanation = "16-18 HCP平均牌型，無單張和缺門"
 
     // Stayman
     "2C" - "Stayman：問4張高花，7+點；或7-8點接力邀叫2NT" {
@@ -64,10 +64,10 @@ fun BiddingTree.oneNoTrump() {
         }
     }
 
-    "4N" - "15-16點，均衡型，滿貫定量邀請"
+    "4N" - "15-16點，平均牌型，滿貫定量邀請"
 
     // Direct game bids
-    "3N" - "9-14點，均衡型，止叫"
+    "3N" - "9-14點，平均牌型，止叫"
 
     // Interference
     overcall("X", "懲罰性") {
@@ -155,12 +155,12 @@ private fun BiddingTree.jacobyToHearts() {
                 warushiRelay()
             }
         }
-        "2N" - "5張牌組均衡型，邀叫"
+        "2N" - "5張牌組平均牌型，邀叫"
         "3C" - "另有4+C，滿貫試探"
         "3D" - "另有4+D，滿貫試探"
         "3H" - "邀叫"
         "3S" - "5+S-5+H滿貫試探"
-        "3N" - "5張牌組均衡型，選擇止叫"
+        "3N" - "5張牌組平均牌型，選擇止叫"
         "4C" - "5+H-5+C滿貫試探"
         "4D" - "5+H-5+D滿貫試探"
         "4H" - "止叫（有一點滿貫意圖，否則用Texas）"
@@ -182,12 +182,12 @@ private fun BiddingTree.jacobyToHearts() {
 private fun BiddingTree.jacobyToSpades() {
     "2S" - "接受轉移" {
         "Pass" - "弱牌"
-        "2N" - "5張牌組均衡型，邀叫"
+        "2N" - "5張牌組平均牌型，邀叫"
         "3C" - "4S-5+C邀叫"
         "3D" - "4S-5+D邀叫"
         "3H" - "4S-5+H邀叫"
         "3S" - "邀叫"
-        "3N" - "5張牌組均衡型，選擇止叫"
+        "3N" - "5張牌組平均牌型，選擇止叫"
         "4C" - "5+S-5+C滿貫試探"
         "4D" - "5+S-5+D滿貫試探"
         "4H" - "5+S-5+H選擇止叫"

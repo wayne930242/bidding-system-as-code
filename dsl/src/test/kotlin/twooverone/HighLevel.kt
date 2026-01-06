@@ -4,7 +4,7 @@ import com.github.phisgr.bridge.BiddingTree
 
 /**
  * 2C 強迫叫性開叫
- * 23+ HCP 均衡型或 8+ 贏墩
+ * 23+ HCP 平均牌型或 8+ 贏墩
  */
 fun BiddingTree.twoClubStrong() {
     explanation = "強迫叫：23+均衡或8+贏墩"
@@ -18,7 +18,7 @@ fun BiddingTree.twoClubStrong() {
         "2S" - "5+S，迫叫" {
             secondNegativeAfterMajor()
         }
-        "2N" - "23-24點均衡型" {
+        "2N" - "23-24點平均牌型" {
             puppetStayman()
         }
         "3C" - "5+C，迫叫" {
@@ -33,8 +33,8 @@ fun BiddingTree.twoClubStrong() {
         "3S" - "跳叫：堅實S牌組，問牌開始" {
             askingBidAfterSolidSuit()
         }
-        "3N" - "25-26點均衡型"
-        "4N" - "27+點均衡型"
+        "3N" - "25-26點平均牌型"
+        "4N" - "27+點平均牌型"
     }
 
     // 正應叫：好的5+張牌組帶2頂張
@@ -44,8 +44,8 @@ fun BiddingTree.twoClubStrong() {
     "3D" - "正應叫：6+D帶一頂張"
 
     // 無將正應叫
-    "2N" - "正應叫：10-12點均衡型，分散大牌"
-    "3N" - "正應叫：13+點均衡型"
+    "2N" - "正應叫：10-12點平均牌型，分散大牌"
+    "3N" - "正應叫：13+點平均牌型"
 }
 
 /**
@@ -219,10 +219,10 @@ fun BiddingTree.weakTwoSpade() {
 
 /**
  * 2NT 開叫
- * 21-22 HCP 均衡型
+ * 21-22 HCP 平均牌型
  */
 fun BiddingTree.twoNoTrump() {
-    explanation = "21-22點均衡型（20點有5張牌組可增值）"
+    explanation = "21-22點平均牌型（20點有5張牌組可增值）"
 
     // Puppet Stayman
     "3C" - "Puppet Stayman：問高花" {

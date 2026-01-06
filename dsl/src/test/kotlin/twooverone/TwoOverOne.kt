@@ -49,7 +49,7 @@ val twoOverOneSystem = BiddingSystem {
     }
 
     // 1NT 開叫
-    "1N" - "均衡型，16-18點" {
+    "1N" - "平均牌型，16-18點" {
         oneNoTrump()
     }
 
@@ -74,7 +74,7 @@ val twoOverOneSystem = BiddingSystem {
     }
 
     // 2NT 開叫
-    "2N" - "均衡型，21-22點" {
+    "2N" - "平均牌型，21-22點" {
         twoNoTrump()
     }
 
