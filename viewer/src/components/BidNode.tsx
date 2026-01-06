@@ -51,7 +51,7 @@ function formatMeaning(meaning: string): ReactNode {
       return (
         <span
           key={index}
-          className="mx-0.5 inline-block rounded-full border-2 border-red-500 bg-white px-1.5 font-semibold text-red-600 dark:border-red-400 dark:bg-red-400/30 dark:text-red-200"
+          className="mx-0.5 inline-block rounded-full bg-red-500 px-2 py-0.5 font-bold text-white"
         >
           {part}
         </span>
