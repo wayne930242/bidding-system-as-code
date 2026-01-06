@@ -300,7 +300,7 @@ export function BidNode({ bidId, depth }: BidNodeProps) {
           )}
           {bid.meaning && (
             <span className="text-muted-foreground">
-              - {formatMeaning(bid.meaning)}
+              {formatMeaning(bid.meaning)}
             </span>
           )}
         </div>

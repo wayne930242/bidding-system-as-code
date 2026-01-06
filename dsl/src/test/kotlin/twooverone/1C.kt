@@ -28,7 +28,7 @@ fun BiddingTree.oneClub() {
     "3N" - "15-18點，平均牌型，無4張高花"
 
     // 反常低花加叫
-    "2C" - "反常低花加叫（Inverted Minors）：9+點，4+C支持，迫叫一輪，無4張高花" {
+    "2C" - "反常低花加叫：9+點，4+C支持，迫叫一輪，無4張高花" {
         invertedMinorRaise()
     }
 
